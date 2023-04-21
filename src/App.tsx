@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Box } from "@chakra-ui/react"
+import Home from "./pages/Home"
 
 function App() {
   
 
   return (
-    <div className="App">
-    </div>
+    <Box display='flex' justifyContent='center' bg='#fff'>
+      <Home/>
+    </Box>
   )
 }
 

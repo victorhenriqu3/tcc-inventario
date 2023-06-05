@@ -1,27 +1,20 @@
-import { Box } from "@chakra-ui/react"
-import Home from "./pages/Home"
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Login from "./pages/Login";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: <Home />,
     },
     {
       path: '/login',
-      element: <Login />
-    }
+      element: <Login />,
+    },
   ]);
 
-
-  return (
-    <RouterProvider router={router} />
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

@@ -1,27 +1,26 @@
-import { Box, Image, Text, Container, Toast, useToast } from "@chakra-ui/react";
+import { Box, Container, Image, Text, useToast } from '@chakra-ui/react';
 import * as React from 'react';
 
 import { QrScanner } from '@yudiel/react-qr-scanner';
 
-
 function Home() {
-  const [status, setStatus] = React.useState<String>('')
+  const [status, setStatus] = React.useState<string>('');
 
-  const toast = useToast()
+  const toast = useToast();
 
   React.useEffect(() => {
     setTimeout(() => {
-      setStatus(' ')
+      setStatus(' ');
     }, 3000);
-  }, [status])
-
+  }, [status]);
 
   return (
     <Container>
       <Image src="/logo-IFRO.png" width={200} pt={5} />
-      <Text textAlign='center' mt={4} fontWeight={600} fontSize={16}>
+      <Text textAlign="center" mt={4} fontWeight={600} fontSize={16}>
         {new Intl.DateTimeFormat('pt-BR', {
-          dateStyle: 'short', timeStyle: 'short'
+          dateStyle: 'short',
+          timeStyle: 'short',
         }).format(new Date())}
       </Text>
 
@@ -30,29 +29,29 @@ function Home() {
           scanDelay={3000}
           containerStyle={{
             borderRadius: '15px',
-            border: "3px solid #00FF19"
+            border: '3px solid #00FF19',
           }}
           hideCount={true}
           constraints={{
             facingMode: 'environment',
-            aspectRatio: 1/1,
+            aspectRatio: 1 / 1,
             //width: { min: 640, ideal: 720, max: 1920 },
             //height: { min: 640, ideal: 720, max: 1080 }
           }}
           tracker={true}
           onDecode={() => {
-            setStatus("Buscando...")
+            setStatus('Buscando...');
           }}
-          onResult={(result) => { 
+          onResult={(result) => {
             if (!toast.isActive('success')) {
               toast({
                 title: `${result}`,
                 duration: 2000,
                 status: 'success',
                 isClosable: true,
-                position:'top-right',
-                id: "success"
-              })
+                position: 'top-right',
+                id: 'success',
+              });
             }
           }}
           onError={() => {
@@ -62,15 +61,17 @@ function Home() {
                 duration: 3000,
                 status: 'error',
                 isClosable: true,
-                id: "error"
-              })
+                id: 'error',
+              });
             }
-
           }}
         />
-        <Text mt={10} textAlign={'center'} fontWeight={600} fontSize={20}>{status}</Text>
+        <Text mt={10} textAlign={'center'} fontWeight={600} fontSize={20}>
+          {status}
+        </Text>
       </Box>
-    </Container>);
+    </Container>
+  );
 }
 
 export default Home;

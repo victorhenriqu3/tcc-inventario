@@ -42,7 +42,6 @@ const PasswordField = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           name="password"
           type={isOpen ? 'text' : 'password'}
           autoComplete="current-password"
-          required
           {...props}
         />
       </InputGroup>

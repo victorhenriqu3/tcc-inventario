@@ -7,6 +7,8 @@ interface ImportMetaEnv {
   readonly VITE_BUCKET: string;
   readonly VITE_SENDER_ID: string;
   readonly VITE_APP_ID: string;
+  readonly VITE_EMAIL: string;
+  readonly VITE_PASSWORD: string;
 }
 
 interface ImportMeta {

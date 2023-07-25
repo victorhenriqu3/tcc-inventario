@@ -23,3 +23,10 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', async () => {
   return { hello: 'world' }
 })
+
+Route.post('/register', 'AuthController.register')
+
+Route.group(() => {
+  //TODO: Create Login and Forget Password Routes
+  Route.post('/register', 'AuthController.register')
+}).prefix('/auth')

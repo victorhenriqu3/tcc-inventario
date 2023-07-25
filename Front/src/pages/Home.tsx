@@ -2,6 +2,7 @@ import { Box, Container, Image, Text, useToast } from '@chakra-ui/react';
 import * as React from 'react';
 
 import { QrScanner } from '@yudiel/react-qr-scanner';
+import Sidebar from '../components/Sidebar';
 
 function Home() {
   const [status, setStatus] = React.useState<string>('');
@@ -15,8 +16,9 @@ function Home() {
   }, [status]);
 
   return (
-    <Container>
-      <Image src="/logo-IFRO.png" width={200} pt={5} />
+    <>
+      <Sidebar />
+      {/*  
       <Text textAlign="center" mt={4} fontWeight={600} fontSize={16}>
         {new Intl.DateTimeFormat('pt-BR', {
           dateStyle: 'short',
@@ -69,8 +71,8 @@ function Home() {
         <Text mt={10} textAlign={'center'} fontWeight={600} fontSize={20}>
           {status}
         </Text>
-      </Box>
-    </Container>
+      </Box> */}
+    </>
   );
 }
 

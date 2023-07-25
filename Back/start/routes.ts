@@ -27,6 +27,6 @@ Route.get('/', async () => {
 Route.post('/register', 'AuthController.register')
 
 Route.group(() => {
-  //TODO: Create Login and Forget Password Routes
   Route.post('/register', 'AuthController.register')
+  Route.post('/login', 'AuthController.login')
 }).prefix('/auth')

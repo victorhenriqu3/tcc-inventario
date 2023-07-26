@@ -27,6 +27,12 @@ Route.get('/', async () => {
 Route.post('/register', 'AuthController.register')
 
 Route.group(() => {
+  Route.get('/', 'KeysController.index')
+})
+  .middleware('auth')
+  .prefix('/keys')
+
+Route.group(() => {
   Route.post('/register', 'AuthController.register')
   Route.post('/login', 'AuthController.login')
 }).prefix('/auth')

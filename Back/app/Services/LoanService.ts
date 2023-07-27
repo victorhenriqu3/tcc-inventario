@@ -1,4 +1,5 @@
 import Database from '@ioc:Adonis/Lucid/Database'
+import Key from 'App/Models/Key'
 import KeyLoan from 'App/Models/KeyLoan'
 import User from 'App/Models/User'
 
@@ -31,6 +32,11 @@ class LoanService {
       loan.responsibleRegister = responsiblePerson.register
       loan.useTransaction(trx)
       await loan.save()
+
+      const key = await Key.findOrFail(keyId)
+      key.useTransaction(trx)
+      key.is_avaible = false
+      await key.save()
 
       await Promise.all([loan.load('user'), loan.load('key')])
 

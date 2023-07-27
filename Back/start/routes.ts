@@ -37,6 +37,8 @@ Route.group(() => {
    Route.get('/', 'LoansController.index')
   */
 
+  Route.put('/:loanId', 'LoansController.updateKey')
+
   Route.post('/', 'LoansController.create')
 })
   .middleware('auth')

@@ -24,13 +24,23 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
-Route.post('/register', 'AuthController.register')
-
 Route.group(() => {
   Route.get('/', 'KeysController.index')
 })
   .middleware('auth')
   .prefix('/keys')
+
+Route.group(() => {
+  /* 
+  TODO: Create list KeyLoans with rangeDate
+  
+   Route.get('/', 'LoansController.index')
+  */
+
+  Route.post('/', 'LoansController.create')
+})
+  .middleware('auth')
+  .prefix('/key-loans')
 
 Route.group(() => {
   Route.post('/register', 'AuthController.register')

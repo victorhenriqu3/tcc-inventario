@@ -27,8 +27,6 @@ class UserService {
       return user
     })
   }
-
-  //TODO: Create Login Service
 }
 
 export default new UserService()

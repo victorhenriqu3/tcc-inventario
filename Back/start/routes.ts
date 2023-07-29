@@ -31,6 +31,12 @@ Route.group(() => {
   .prefix('/keys')
 
 Route.group(() => {
+  Route.post('/', 'VisitorsController.create')
+})
+  .middleware('auth')
+  .prefix('/visitors')
+
+Route.group(() => {
   /* 
   TODO: Create list KeyLoans with rangeDate
   

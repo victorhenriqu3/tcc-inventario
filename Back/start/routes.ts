@@ -32,6 +32,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.post('/', 'VisitorsController.create')
+  Route.put('/:visitorId', 'VisitorsController.update')
 })
   .middleware('auth')
   .prefix('/visitors')

@@ -17,4 +17,9 @@ export default class VisitorsController {
 
     return await VisitorService.create({ ...validated, user: auth.user! })
   }
+
+  public async update({ request }: HttpContextContract) {
+    const visitorId = request.param('visitorId')
+    return await VisitorService.update(visitorId)
+  }
 }

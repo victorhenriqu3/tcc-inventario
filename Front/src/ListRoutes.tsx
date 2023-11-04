@@ -3,18 +3,18 @@
 import { RouteObject } from 'react-router-dom';
 import Home from './pages/Home';
 
-const routes: RouteObject[] = [
+const ListRoutes: RouteObject[] = [
   {
     id: 'Chaves',
-    path: '/',
+    path: '/keys',
     Component: Home,
   },
   {
-    id: 'Chav',
-    path: '/chaves',
+    id: 'Visitantes',
+    path: '/visitors',
     Component: Home,
   },
 
 ];
 
-export default routes;
+export default ListRoutes;

@@ -1,8 +1,10 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, FlexProps } from "@chakra-ui/react";
 
-export function Separator(props) {
-  const { variant, children, ...rest } = props;
+
+
+export function Separator(props: FlexProps) {
+  const { children, ...rest } = props;
   return (
     <Flex
       h="1px"

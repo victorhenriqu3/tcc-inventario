@@ -44,8 +44,7 @@
             "warn",
             {
                 "vars": "all",
-                "ignoreRestSiblings": true,
-                "argsIgnorePattern": "^_"
+                "ignoreRestSiblings": true
             }
         ],
         "react/react-in-jsx-scope": "off"

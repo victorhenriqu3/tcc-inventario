@@ -1,16 +1,29 @@
-import { Box, Button, Container, FormControl, FormErrorMessage, FormLabel, Input, Stack, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Stack,
+  useToast,
+} from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Logo } from '../components/Logo';
 import PasswordField from '../components/PasswordField';
+import { useAuth } from '../contexts/AuthContext';
+import { loginWithCredentials } from '../services/auth';
 
 interface ILoginForm {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 }
 
 function Login() {
-  const toast = useToast()
+  const toast = useToast();
+  const { Login } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -19,23 +32,30 @@ function Login() {
     reset,
     formState: { errors },
   } = useForm<ILoginForm>();
-  const onSubmit = handleSubmit((data) => {
-    if (data.email === 'victor@gmail.com' && data.password === 'password') {
-      navigate('/')
-    } else {
+
+  const onSubmit = async (values: ILoginForm) => {
+    try {
+      const result = await loginWithCredentials(values);
+
+      if (!result) return;
+
+      Login(result)
+      navigate('/');
+
+    } catch (error) {
       reset()
-      !toast.isActive('loginError') && toast({
-        id: 'loginError', description: 'Email e/ou Senha estão Incorretos', status: 'error',
-        position: 'top',
-        duration: 9000,
-        isClosable: true,
-      })
+      !toast.isActive('loginError') &&
+        toast({
+          id: 'loginError',
+          description: 'Email e/ou Senha estão Incorretos',
+          status: 'error',
+          position: 'top',
+          duration: 9000,
+          isClosable: true,
+        });
     }
+  };
 
-  }
-
-
-  );
   return (
     <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
       <Stack spacing="8">
@@ -45,10 +65,8 @@ function Login() {
 
         <Box py={{ base: '0', sm: '8' }} px={{ base: '4', sm: '10' }} borderRadius={{ base: 'none', sm: 'xl' }}>
           <Stack spacing="6">
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing="5">
-
-
                 <FormControl isInvalid={!!errors.email}>
                   <FormLabel htmlFor="email">E-mail</FormLabel>
                   <Input
@@ -64,7 +82,6 @@ function Login() {
                   />
                   <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
                 </FormControl>
-
 
                 <FormControl isInvalid={!!errors.password}>
                   <PasswordField

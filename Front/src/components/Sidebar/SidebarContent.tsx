@@ -28,7 +28,7 @@ export default function SidebarContent({ routes }: ISidebar) {
               alignItems="center"
               bg={activeBg}
               color={activeColor}
-              _hover="none"
+              _hover={{}}
               mb={{
                 xl: '12px',
               }}
@@ -71,7 +71,7 @@ export default function SidebarContent({ routes }: ISidebar) {
                 xl: '16px',
               }}
               borderRadius="15px"
-              _hover="none"
+              _hover={{}}
               w="100%"
               _active={{
                 bg: 'inherit',

@@ -3,7 +3,8 @@ import {
   Box
 } from "@chakra-ui/react";
 import SidebarContent from "./SidebarContent";
-import routes from "../../routes";
+import ListRoutes from "../../ListRoutes";
+
 
 
 
@@ -30,7 +31,7 @@ function Sidebar() {
           borderRadius={sidebarRadius}
           boxShadow={'0.3em 0.3em 0.9em rgba(0, 0, 0, 0.1);'}
         >
-          <SidebarContent routes={routes}
+          <SidebarContent routes={ListRoutes}
           />
         </Box>
       </Box>

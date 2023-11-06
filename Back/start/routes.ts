@@ -24,6 +24,8 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
+Route.get('/me', 'AuthController.currentUser').middleware('auth').prefix('/auth')
+
 Route.group(() => {
   Route.get('/', 'KeysController.index')
 })
@@ -38,9 +40,9 @@ Route.group(() => {
   .prefix('/visitors')
 
 Route.group(() => {
-  /* 
+  /*
   TODO: Create list KeyLoans with rangeDate
-  
+
    Route.get('/', 'LoansController.index')
   */
 

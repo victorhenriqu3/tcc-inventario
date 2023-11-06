@@ -1,5 +1,5 @@
 import { Authorization } from '../types';
-import { axiosClient } from './BaseApi';
+import { axiosClient, getAuthorizationHeaders } from './BaseApi';
 
 export interface LoginWithCredentialsParams {
   email: string;
@@ -26,5 +26,17 @@ export async function loginWithCredentials(params: LoginWithCredentialsParams) {
     return responseToAuthorization(response.data);
   } catch (_error) {
     throw new Error('Email e/ou senha inválido');
+  }
+}
+
+export async function getCurrentUser() {
+  try {
+    const response = await axiosClient.get('/auth/me', {
+      headers: getAuthorizationHeaders(),
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error('Não foi possível identificar. Tente Novamente.');
   }
 }

@@ -25,11 +25,18 @@ export default class AuthController {
 
     return { ...token.toJSON(), user_id: token.user.id }
   }
+
   public async login({ request, auth }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
 
     const token = await auth.use('api').attempt(email, password)
     return { ...token.toJSON(), user_id: token.user.id }
+  }
+
+  public async currentUser({ auth }: HttpContextContract) {
+    const { user } = auth
+
+    return user
   }
 }

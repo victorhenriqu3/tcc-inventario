@@ -20,6 +20,8 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   const [user, setUser] = useState<Authorization | undefined>(getAuthorizationValue());
   async function Login(userData: Authorization) {
     setUser(userData)
+
+
     localStorage.setItem('@App:Authorization', JSON.stringify(userData))
     localStorage.setItem('@App:token', userData.accessToken)
 

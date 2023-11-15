@@ -18,6 +18,6 @@ export default function useCurrentUser() {
       }
     };
     getName();
-  }, [user]);
+  }, [fetched]);
   return { user, loading, fetched };
 }

@@ -15,6 +15,12 @@ interface CreateLoanParams {
   user: User
 }
 
+interface LoanFilter {
+  key?: number
+  startDateTime?: string
+  finalDateTime?: string
+}
+
 class LoanService {
   public async create({
     user,
@@ -60,6 +66,10 @@ class LoanService {
 
       return loan
     })
+  }
+
+  public async getAll(user: User) {
+    return KeyLoan.query().where('user_id', user.id).orderBy('created_at', 'desc').preload('key')
   }
 }
 export default new LoanService()

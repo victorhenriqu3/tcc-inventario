@@ -4,7 +4,6 @@ import Sidebar from '../Sidebar';
 import styled from 'styled-components';
 import media from '../../helpers/media';
 
-
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -44,12 +43,11 @@ const LeftSidebarWrapper = styled(Sidebar)`
 const Content = styled.main`
   grid-area: content;
   overflow-y: auto;
-  padding-bottom: 80px;
-  padding: 57px 0 80px; 
-  ${media.desktop} {
-    padding-left: 54px;
-    margin-left: -54px;
-  }
+  justify-content: center;
+  display: flex;
+  margin-top: 57px;
+  
+
 `;
 
 export default function Layout(props: LayoutProps) {

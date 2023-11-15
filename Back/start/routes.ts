@@ -42,9 +42,9 @@ Route.group(() => {
 Route.group(() => {
   /*
   TODO: Create list KeyLoans with rangeDate
+   */
 
-   Route.get('/', 'LoansController.index')
-  */
+  Route.get('/', 'LoansController.index')
 
   Route.put('/:loanId', 'LoansController.updateKey')
 

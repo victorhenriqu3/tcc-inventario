@@ -19,6 +19,12 @@ export default class LoansController {
     return await LoanService.create({ ...validated, user: auth.user! })
   }
 
+  public async index({ auth }: HttpContextContract) {
+    const { user } = auth
+
+    return await LoanService.getAll(user!)
+  }
+
   public async updateKey({ request }: HttpContextContract) {
     const loanId = request.param('loanId')
     return await LoanService.update(loanId)

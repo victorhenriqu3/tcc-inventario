@@ -11,18 +11,22 @@ import {
   MenuItem,
   MenuList,
   Text,
+  useDisclosure
 } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdAdd } from 'react-icons/md';
+import CreateKeyLoans from '../../components/CreateKeyLoan';
 import Layout from '../../components/Layout';
 import useKeyLoans from '../../hooks/useKeyLoans';
 import { CardKeyLoan, DisplayEntries } from './styles.keys';
 
 export default function Keys() {
   const { loans } = useKeyLoans();
+  const createModal = useDisclosure()
 
   return (
     <>
+      <CreateKeyLoans isOpen={createModal.isOpen} onClose={createModal.onClose} />
       <Layout>
         <Box w="100%" maxW="1040px">
           <Breadcrumb>
@@ -37,7 +41,7 @@ export default function Keys() {
           </Text>
           <Box w="100%" display="flex" justifyContent="space-between" alignItems="center">
             <Input w="50%" placeholder="Pesquisar chave" />
-            <Button bg="#2f80ed" color="white" variant="primary" type="submit" leftIcon={<MdAdd />}>
+            <Button bg="#2f80ed" color="white" variant="primary" onClick={createModal.onOpen} leftIcon={<MdAdd />}>
               Cadastrar
             </Button>
           </Box>

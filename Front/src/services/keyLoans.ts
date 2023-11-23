@@ -15,6 +15,16 @@ export interface KeyLoanModel {
   updatedAt: string;
 }
 
+export interface CreateKeyLoanPayload {
+  keyId: number;
+  reason: string;
+  responsiblePerson: {
+    name: string;
+    register: string;
+    phone: string;
+  };
+}
+
 const keyLoanToLoanModel = (response: KeyLoan): KeyLoanModel => ({
   ...response,
   key: keyToKeyModel(response.key),
@@ -29,6 +39,15 @@ export async function getAllLoans(): Promise<KeyLoanModel[]> {
     });
 
     return response.data.map((loan) => keyLoanToLoanModel(loan));
+  } catch (error) {
+    throw new Error('Erro no Servidor.Tente Novamente.');
+  }
+}
+
+export async function createKeyLoan(payload: CreateKeyLoanPayload) {
+  try {
+    const response = await axiosClient.post(`/key-loans`, { ...payload }, { headers: getAuthorizationHeaders() });
+    return keyLoanToLoanModel(response.data);
   } catch (error) {
     throw new Error('Erro no Servidor.Tente Novamente.');
   }

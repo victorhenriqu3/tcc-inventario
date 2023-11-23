@@ -11,7 +11,7 @@ import {
   MenuItem,
   MenuList,
   Text,
-  useDisclosure
+  useDisclosure,
 } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdAdd } from 'react-icons/md';
@@ -22,7 +22,7 @@ import { CardKeyLoan, DisplayEntries } from './styles.keys';
 
 export default function Keys() {
   const { loans } = useKeyLoans();
-  const createModal = useDisclosure()
+  const createModal = useDisclosure();
 
   return (
     <>
@@ -47,7 +47,7 @@ export default function Keys() {
           </Box>
           <Box mt={5} textAlign="center">
             {!!loans && loans.length === 0 ? (
-              <Text mb={5} color="#afafaf">
+              <Text mx={5} color="#afafaf">
                 Sem items
               </Text>
             ) : (
@@ -60,7 +60,6 @@ export default function Keys() {
                       {' | '}
                       <span>{item.responsible_register}</span>
                     </section>
-
                     <section>
                       <Badge
                         px={2}
@@ -81,10 +80,7 @@ export default function Keys() {
                       </Menu>
                     </section>
                   </Box>
-                  <Box textAlign='start'>
-                    {item.reason}
-                  </Box>
-
+                  <Box textAlign="start">{item.reason}</Box>
                   <DisplayEntries>
                     <span>Saída: {item.createdAt}</span>
                     <span>

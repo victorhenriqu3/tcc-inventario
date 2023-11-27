@@ -44,6 +44,8 @@ Route.group(() => {
   TODO: Create list KeyLoans with rangeDate
    */
 
+  Route.delete('/:loanId', 'LoansController.deleteLoan')
+
   Route.get('/', 'LoansController.index')
 
   Route.put('/:loanId', 'LoansController.updateKey')

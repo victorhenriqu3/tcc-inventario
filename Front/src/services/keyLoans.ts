@@ -52,3 +52,12 @@ export async function createKeyLoan(payload: CreateKeyLoanPayload) {
     throw new Error('Erro no Servidor.Tente Novamente.');
   }
 }
+
+export async function deleteKeyLoan(loanId: number) {
+  try {
+    const response = await axiosClient.delete(`/key-loans/${loanId}`, { headers: getAuthorizationHeaders() });
+    return response.status === 200;
+  } catch (error) {
+    throw new Error('Erro no Servidor.Tente Novamente.');
+  }
+}

@@ -11,22 +11,45 @@ import {
   MenuItem,
   MenuList,
   Text,
-  useDisclosure,
+  useDisclosure
 } from '@chakra-ui/react';
+import React from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdAdd } from 'react-icons/md';
 import CreateKeyLoans from '../../components/CreateKeyLoan';
 import Layout from '../../components/Layout';
 import useKeyLoans from '../../hooks/useKeyLoans';
+import { KeyLoanModel, deleteKeyLoan } from '../../services/keyLoans';
 import { CardKeyLoan, DisplayEntries } from './styles.keys';
 
 export default function Keys() {
+
   const { loans } = useKeyLoans();
   const createModal = useDisclosure();
+
+  const handleRemove = React.useCallback(
+    async (Loan: KeyLoanModel) => {
+      const proceed = confirm("Tem Certeza que deseja deletar o Emprestimo?")
+
+      if (!proceed) return
+
+
+      try {
+        await deleteKeyLoan(Loan.id)
+        window.location.reload()
+
+      } catch (error) {
+        throw new Error('Erro aqui')
+
+      }
+    },
+    [deleteKeyLoan],
+  )
 
   return (
     <>
       <CreateKeyLoans isOpen={createModal.isOpen} onClose={createModal.onClose} />
+
       <Layout>
         <Box w="100%" maxW="1040px">
           <Breadcrumb>
@@ -75,6 +98,7 @@ export default function Keys() {
                           <BsThreeDotsVertical />
                         </MenuButton>
                         <MenuList>
+                          <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
                           <MenuItem>Ver Detalhes</MenuItem>
                         </MenuList>
                       </Menu>

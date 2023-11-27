@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema } from '@ioc:Adonis/Core/Validator'
+import KeyLoan from 'App/Models/KeyLoan'
 import LoanService from 'App/Services/LoanService'
 
 export default class LoansController {
@@ -28,5 +29,12 @@ export default class LoansController {
   public async updateKey({ request }: HttpContextContract) {
     const loanId = request.param('loanId')
     return await LoanService.update(loanId)
+  }
+
+  public async deleteLoan({ request }: HttpContextContract) {
+    const loanId = request.param('loanId')
+    const keyloan = await KeyLoan.findOrFail(loanId)
+
+    return await keyloan.delete()
   }
 }

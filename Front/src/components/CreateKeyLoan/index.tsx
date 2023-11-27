@@ -43,8 +43,8 @@ const CreateKeyLoans = ({ isOpen, onClose }: IProps) => {
     try {
       reset();
       await createKeyLoan(values)
-      //console.log(values);
       onClose()
+      window.location.reload()
     } catch (_error) {
       console.error(_error);
     }

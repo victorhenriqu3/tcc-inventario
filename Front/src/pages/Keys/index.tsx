@@ -51,7 +51,7 @@ export default function Keys() {
       <CreateKeyLoans isOpen={createModal.isOpen} onClose={createModal.onClose} />
 
       <Layout>
-        <Box w="100%" maxW="1040px">
+        <Box w="100%" maxW="1040px" margin="0 50px">
           <Breadcrumb>
             <BreadcrumbItem>
               <BreadcrumbLink href="#" color="#118D3B" fontWeight="600">
@@ -77,13 +77,13 @@ export default function Keys() {
               !!loans &&
               loans.map((item) => (
                 <CardKeyLoan key={item.id}>
-                  <Box display="flex" flexDirection="row" justifyContent="space-between">
+                  <Box m={1} display="flex" alignItems='center' flexDirection={{ base: 'column-reverse', md: 'row' }} justifyContent="space-between">
                     <section>
                       <span>{item.responsible_name}</span>
                       {' | '}
                       <span>{item.responsible_register}</span>
                     </section>
-                    <section>
+                    <Box display='flex' justifyContent="space-between" >
                       <Badge
                         px={2}
                         borderRadius={4}
@@ -93,7 +93,7 @@ export default function Keys() {
                       >
                         {item.key.name}
                       </Badge>
-                      <Menu>
+                      <Menu >
                         <MenuButton>
                           <BsThreeDotsVertical />
                         </MenuButton>
@@ -102,7 +102,7 @@ export default function Keys() {
                           <MenuItem>Ver Detalhes</MenuItem>
                         </MenuList>
                       </Menu>
-                    </section>
+                    </Box>
                   </Box>
                   <Box textAlign="start">{item.reason}</Box>
                   <DisplayEntries>

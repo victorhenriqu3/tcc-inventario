@@ -9,8 +9,7 @@ padding: 8px;
 box-shadow: rgba(149, 157, 165, 0.1) 4px 8px 8px 8px;
 
 div{
-  margin: 16px;
-  
+  margin: 12px;
 }
 `
 

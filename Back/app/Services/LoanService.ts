@@ -71,5 +71,20 @@ class LoanService {
   public async getAll(user: User) {
     return KeyLoan.query().where('user_id', user.id).orderBy('created_at', 'desc').preload('key')
   }
+
+  public async delete(loanId: number) {
+    return await Database.transaction(async (trx) => {
+      const keyloan = await KeyLoan.query()
+        .useTransaction(trx)
+        .where({ id: loanId })
+        .preload('key')
+        .firstOrFail()
+      const key = await Key.query().useTransaction(trx).where({ id: keyloan.key.id }).first()
+
+      await key?.merge({ is_avaible: true }).save()
+
+      await keyloan.delete()
+    })
+  }
 }
 export default new LoanService()

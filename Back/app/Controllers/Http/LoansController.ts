@@ -33,8 +33,7 @@ export default class LoansController {
 
   public async deleteLoan({ request }: HttpContextContract) {
     const loanId = request.param('loanId')
-    const keyloan = await KeyLoan.findOrFail(loanId)
 
-    return await keyloan.delete()
+    return await LoanService.delete(loanId)
   }
 }

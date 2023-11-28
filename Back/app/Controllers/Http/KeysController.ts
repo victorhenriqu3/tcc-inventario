@@ -10,4 +10,7 @@ export default class KeysController {
     }
     return await Database.from(Key.table).where('is_avaible', true)
   }
+
+  public async updateKey
 }
+

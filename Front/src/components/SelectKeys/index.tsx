@@ -27,10 +27,8 @@ export const SelectKeys = (
           border={`1px solid ${error ? "#da5656" : "#cbdbff"} `}
           borderRadius="10px"
           onChange={onChange}
-
         >
           {keys?.map(item => <option value={item.id} key={`option-${item.name}`}>{item.name}</option>)}
-
         </Select >
       </Container >
 

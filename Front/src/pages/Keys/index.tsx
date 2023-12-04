@@ -13,7 +13,7 @@ import {
   Text,
   useDisclosure
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdAdd } from 'react-icons/md';
 import CreateKeyLoans from '../../components/CreateKeyLoan';
@@ -21,11 +21,15 @@ import Layout from '../../components/Layout';
 import useKeyLoans from '../../hooks/useKeyLoans';
 import { KeyLoanModel, deleteKeyLoan } from '../../services/keyLoans';
 import { CardKeyLoan, DisplayEntries } from './styles.keys';
+import EditBelongingForm from '../../components/EditKeyLoan';
 
 export default function Keys() {
 
   const { loans } = useKeyLoans();
   const createModal = useDisclosure();
+  const editModal = useDisclosure();
+
+  const [loanId, setLoanId] = useState<number>()
 
   const handleRemove = React.useCallback(
     async (Loan: KeyLoanModel) => {
@@ -49,7 +53,7 @@ export default function Keys() {
   return (
     <>
       <CreateKeyLoans isOpen={createModal.isOpen} onClose={createModal.onClose} />
-
+      <EditBelongingForm isOpen={editModal.isOpen} onClose={editModal.onClose} loanId={loanId!} />
       <Layout>
         <Box w="100%" maxW="1040px" margin="0 50px">
           <Breadcrumb>
@@ -78,18 +82,18 @@ export default function Keys() {
               loans.map((item) => (
                 <CardKeyLoan key={item.id}>
                   <Box m={1} display="flex" alignItems='center' flexDirection={{ base: 'column-reverse', md: 'row' }} justifyContent="space-between">
-                    <section>
-                      <span>{item.responsible_name}</span>
+                    <Box my={3} display='flex' alignItems='start' justifyContent='start' gap={3}>
+                      <Text m={0} fontWeight='600' fontSize={14}>{item.responsible_name}</Text>
                       {' | '}
-                      <span>{item.responsible_register}</span>
-                    </section>
+                      <Text fontWeight='400' fontSize={14}>{item.responsible_register}</Text>
+                    </Box>
                     <Box display='flex' justifyContent="space-between" >
                       <Badge
                         px={2}
                         borderRadius={4}
                         variant="solid"
                         mx={5}
-                        colorScheme={`${item.key.is_avaible ? 'red' : 'green'}`}
+                        colorScheme={`${item.key.is_avaible ? 'green' : 'red'}`}
                       >
                         {item.key.name}
                       </Badge>
@@ -99,17 +103,20 @@ export default function Keys() {
                         </MenuButton>
                         <MenuList>
                           <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
-                          <MenuItem>Ver Detalhes</MenuItem>
+                          <MenuItem onClick={() => {
+                            setLoanId(item.id);
+                            editModal.onOpen()
+                          }}>Ver Detalhes</MenuItem>
                         </MenuList>
                       </Menu>
                     </Box>
                   </Box>
-                  <Box textAlign="start">{item.reason}</Box>
+                  <Box my={3} textAlign="start">{item.reason}</Box>
                   <DisplayEntries>
                     <span>Saída: {item.createdAt}</span>
                     <span>
                       Devolução:
-                      {item.updatedAt ?? (
+                      {item.key.is_avaible ? item.updatedAt : (
                         <Badge ms={2} variant="outline" colorScheme="red">
                           Não Foi devolvida.
                         </Badge>

@@ -25,6 +25,10 @@ export interface CreateKeyLoanPayload {
   };
 }
 
+export interface EditKeyLoanPayload extends CreateKeyLoanPayload {
+  isAvaible: boolean;
+}
+
 const keyLoanToLoanModel = (response: KeyLoan): KeyLoanModel => ({
   ...response,
   key: keyToKeyModel(response.key),
@@ -44,6 +48,15 @@ export async function getAllLoans(): Promise<KeyLoanModel[]> {
   }
 }
 
+export async function getLoanById(loanId: number) {
+  try {
+    const response = await axiosClient.get(`/key-loans/${loanId}`, { headers: getAuthorizationHeaders() });
+    return keyLoanToLoanModel(response.data);
+  } catch (error) {
+    throw new Error('Erro no Servidor.Tente Novamente.');
+  }
+}
+
 export async function createKeyLoan(payload: CreateKeyLoanPayload) {
   try {
     const response = await axiosClient.post(`/key-loans`, { ...payload }, { headers: getAuthorizationHeaders() });
@@ -57,6 +70,20 @@ export async function deleteKeyLoan(loanId: number) {
   try {
     const response = await axiosClient.delete(`/key-loans/${loanId}`, { headers: getAuthorizationHeaders() });
     return response.status === 200;
+  } catch (error) {
+    throw new Error('Erro no Servidor.Tente Novamente.');
+  }
+}
+
+export async function editKeyLoan(loanId: number, payload: EditKeyLoanPayload) {
+  try {
+    const response = await axiosClient.put(
+      `/key-loans/${loanId}`,
+      { ...payload },
+      { headers: getAuthorizationHeaders() },
+    );
+
+    return response.data;
   } catch (error) {
     throw new Error('Erro no Servidor.Tente Novamente.');
   }

@@ -15,6 +15,11 @@ interface CreateLoanParams {
   user: User
 }
 
+interface UpdateLoanParams extends CreateLoanParams {
+  loanId: number
+  isAvaible: boolean
+}
+
 interface LoanFilter {
   key?: number
   startDateTime?: string
@@ -37,6 +42,7 @@ class LoanService {
       loan.responsibleName = responsiblePerson.name
       loan.responsiblePhone = responsiblePerson.phone
       loan.responsibleRegister = responsiblePerson.register
+
       loan.useTransaction(trx)
       await loan.save()
 
@@ -51,15 +57,25 @@ class LoanService {
     })
   }
 
-  public async update(loanId: number) {
+  public async update({ loanId, isAvaible, responsiblePerson, reason, keyId }: UpdateLoanParams) {
     return Database.transaction(async (trx) => {
       const loan = await KeyLoan.findOrFail(loanId)
       loan.useTransaction(trx)
       loan.updatedAt = DateTime.local()
+      loan.keyId = keyId
+      loan.reason = reason
+      loan.responsibleName = responsiblePerson.name
+      loan.responsiblePhone = responsiblePerson.phone
+      loan.responsibleRegister = responsiblePerson.register
+      if (isAvaible) {
+        loan.updatedAt = DateTime.local()
+      }
 
-      const key = await Key.findOrFail(loan.keyId)
+      await loan.save()
+
+      const key = await Key.findOrFail(keyId)
       key.useTransaction(trx)
-      key.is_avaible = true
+      key.is_avaible = isAvaible
       await key.save()
 
       await Promise.all([loan.load('user'), loan.load('key')])
@@ -85,6 +101,12 @@ class LoanService {
 
       await keyloan.delete()
     })
+  }
+
+  public async show(loanId: number) {
+    const loan = await KeyLoan.findOrFail(loanId)
+    await loan.load('key')
+    return loan
   }
 }
 export default new LoanService()

@@ -46,6 +46,8 @@ Route.group(() => {
 
   Route.delete('/:loanId', 'LoansController.deleteLoan')
 
+  Route.get('/:loanId', 'LoansController.show')
+
   Route.get('/', 'LoansController.index')
 
   Route.put('/:loanId', 'LoansController.updateKey')

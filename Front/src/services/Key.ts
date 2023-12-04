@@ -12,7 +12,7 @@ export interface KeyModel {
 
 export const keyToKeyModel = (response: Key): KeyModel => ({
   ...response,
-  is_avaible: response.is_avaible === 0,
+  is_avaible: response.is_avaible === 1,
   createdAt: toDateOrNull(response.created_at)!,
   updatedAt: toDateOrNull(response.updated_at)!,
 });

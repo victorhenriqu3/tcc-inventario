@@ -33,6 +33,7 @@ Route.group(() => {
   .prefix('/keys')
 
 Route.group(() => {
+  Route.get('/', 'VisitorsController.getAll')
   Route.post('/', 'VisitorsController.create')
   Route.put('/:visitorId', 'VisitorsController.update')
 })

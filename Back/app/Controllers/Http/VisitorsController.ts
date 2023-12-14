@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema } from '@ioc:Adonis/Core/Validator'
+import Visitor from 'App/Models/Visitor'
 import VisitorService from 'App/Services/VisitorService'
 
 export default class VisitorsController {
@@ -21,5 +22,13 @@ export default class VisitorsController {
   public async update({ request }: HttpContextContract) {
     const visitorId = request.param('visitorId')
     return await VisitorService.update(visitorId)
+  }
+
+  public async getAll({ request }: HttpContextContract) {
+    const { name } = request.qs()
+
+    return await Visitor.query()
+      .if(name, (query) => query.whereILike('name', `%${name}%`))
+      .orderBy('created_at', 'desc')
   }
 }

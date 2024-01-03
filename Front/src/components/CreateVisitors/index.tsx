@@ -10,9 +10,9 @@ import {
 } from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
 import { CreateVisitorPayload, createVisitor } from '../../services/visitors';
+import CPFInput from '../CPFInput/CPFInput';
 import Input from '../Input';
 import PhoneInput from '../PhoneInput';
-import RegisterInput from '../RegisterInput';
 
 interface IProps {
   isOpen: boolean;
@@ -73,13 +73,16 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
                 name='responsiblePerson.phone'
                 control={control}
                 defaultValue=''
-                rules={{ required: 'Digite o Telefone' }}
+                rules={{
+                  required: 'Digite o Telefone',
+                }}
                 render={({ field }) => (
                   <PhoneInput
                     label="Telefone"
                     placeholder="(xx) x xxxx-xxxx"
                     onAccept={field.onChange}
                     value={field.value}
+                    error={errors.responsiblePerson?.phone?.message}
                   />
                 )}
               />
@@ -87,13 +90,14 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
                 name='responsiblePerson.cpf'
                 control={control}
                 defaultValue=''
-                rules={{ required: 'Digite a Matricula' }}
+                rules={{ required: 'Digite o CPF' }}
                 render={({ field }) => (
-                  <RegisterInput
-                    label="Matrícula"
-                    placeholder="xxxxxxxxxxxxx-x"
+                  <CPFInput
+                    label="CPF"
+                    placeholder="XXX.XXX.XXX-XX"
                     onAccept={field.onChange}
                     value={field.value}
+                    error={errors.responsiblePerson?.cpf?.message}
                   />
                 )}
               />

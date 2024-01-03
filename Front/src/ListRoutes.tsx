@@ -1,8 +1,8 @@
 
 // eslint-disable-next-line import/named
 import { RouteObject } from 'react-router-dom';
-import Home from './pages/Home';
 import Keys from './pages/Keys';
+import Visitors from './pages/Visitors';
 
 const ListRoutes: RouteObject[] = [
   {
@@ -13,7 +13,7 @@ const ListRoutes: RouteObject[] = [
   {
     id: 'Visitantes',
     path: '/visitors',
-    Component: Home,
+    Component: Visitors,
   },
 
 ];

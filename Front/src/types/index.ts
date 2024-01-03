@@ -29,3 +29,14 @@ export interface KeyLoan {
   updated_at: string | null;
   key: Key;
 }
+
+export interface Visitor {
+  id: number;
+  user_id: number;
+  reason: string;
+  name: string;
+  cpf: string;
+  phone: string;
+  created_at: string | null;
+  updated_at: string | null;
+}

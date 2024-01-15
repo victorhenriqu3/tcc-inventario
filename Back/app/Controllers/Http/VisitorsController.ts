@@ -31,4 +31,10 @@ export default class VisitorsController {
       .if(name, (query) => query.whereILike('name', `%${name}%`))
       .orderBy('created_at', 'desc')
   }
+
+  public async delete({ request }: HttpContextContract) {
+    const visitorId = request.param('visitorId')
+
+    return await VisitorService.delete(visitorId)
+  }
 }

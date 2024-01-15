@@ -45,6 +45,17 @@ class VisitorService {
       return visitor
     })
   }
+
+  public async delete(visitorId: number) {
+    return await Database.transaction(async (trx) => {
+      const keyloan = await Visitor.query()
+        .useTransaction(trx)
+        .where({ id: visitorId })
+        .firstOrFail()
+
+      await keyloan.delete()
+    })
+  }
 }
 
 export default new VisitorService()

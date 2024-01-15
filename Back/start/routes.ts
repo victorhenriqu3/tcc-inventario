@@ -36,6 +36,7 @@ Route.group(() => {
   Route.get('/', 'VisitorsController.getAll')
   Route.post('/', 'VisitorsController.create')
   Route.put('/:visitorId', 'VisitorsController.update')
+  Route.delete('/:visitorId', 'VisitorsController.delete')
 })
   .middleware('auth')
   .prefix('/visitors')

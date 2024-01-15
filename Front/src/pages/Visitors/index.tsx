@@ -6,57 +6,40 @@ import {
   BreadcrumbLink,
   Button,
   Input,
-  Menu,
-  MenuButton,
   MenuItem,
   MenuList,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import React from 'react';
 import { MdAdd, MdCheck } from 'react-icons/md';
 import CreateVisitors from '../../components/CreateVisitors';
 import Layout from '../../components/Layout';
+import { MenuResponsive, MenuResponsiveMD } from '../../components/Menu';
 import useVisitors from '../../hooks/useVisitors';
+import { VisitorsModel, deleteVisitor } from '../../services/visitors';
 import { CardVisitors } from './styles.visitors';
 
 export default function Visitors() {
   const { Visitors } = useVisitors();
   const createModal = useDisclosure();
 
-  function MenuResponsiveMD() {
-    return (
-      <Box display={{ base: 'none', md: 'block' }}>
-        {' '}
-        <Menu>
-          <MenuButton>
-            <BsThreeDotsVertical />
-          </MenuButton>
-          <MenuList>
-            <MenuItem>Deletar</MenuItem>
-            <MenuItem>Ver Detalhes</MenuItem>
-          </MenuList>
-        </Menu>
-      </Box>
-    );
-  }
+  const handleRemove = React.useCallback(
+    async (Visitor: VisitorsModel) => {
+      const proceed = confirm('Tem Certeza que deseja deletar o Visitante?');
 
-  function MenuResponsive() {
-    return (
-      <Box display={{ base: 'block', md: 'none' }}>
-        {' '}
-        <Menu>
-          <MenuButton>
-            <BsThreeDotsVertical />
-          </MenuButton>
-          <MenuList>
-            <MenuItem>Deletar</MenuItem>
-            <MenuItem>Ver Detalhes</MenuItem>
-          </MenuList>
-        </Menu>
-      </Box>
-    );
-  }
+      if (!proceed) return;
+
+      try {
+        await deleteVisitor(Visitor.id);
+        window.location.reload();
+      } catch (error) {
+        confirm('Erro no servidor, tente novamente.');
+        throw new Error('Erro no servidor, tente novamente.');
+      }
+    },
+    [deleteVisitor],
+  );
 
   return (
     <>
@@ -105,7 +88,12 @@ export default function Visitors() {
                             {item.cpf} {item.phone ? `| ${item.phone} ` : ''}
                           </Text>
                         </Box>
-                        <MenuResponsive />
+                        <MenuResponsive>
+                          <MenuList>
+                            <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
+                            <MenuItem>Ver Detalhes</MenuItem>
+                          </MenuList>
+                        </MenuResponsive>
                       </Box>
 
                       <Box display="flex" gap={10} m="3">
@@ -123,7 +111,12 @@ export default function Visitors() {
                             </Badge>
                           )}
                         </Text>
-                        <MenuResponsiveMD />
+                        <MenuResponsiveMD>
+                          <MenuList>
+                            <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
+                            <MenuItem>Ver Detalhes</MenuItem>
+                          </MenuList>
+                        </MenuResponsiveMD>
                       </Box>
                     </Box>
 

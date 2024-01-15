@@ -8,5 +8,4 @@ flex-direction: column;
 border-radius: 16px;
 padding: 12px;
 box-shadow: rgba(149, 157, 165, 0.1) 4px 8px 8px 8px;
-
 `

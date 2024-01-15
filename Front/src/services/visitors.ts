@@ -46,3 +46,12 @@ export async function createVisitor(params: CreateVisitorPayload): Promise<Visit
     throw new Error('Erro no Servidor.Tente Novamente.');
   }
 }
+
+export async function deleteVisitor(loanId: number) {
+  try {
+    const response = await axiosClient.delete(`/visitors/${loanId}`, { headers: getAuthorizationHeaders() });
+    return response.status === 200;
+  } catch (error) {
+    throw new Error('Erro no Servidor.Tente Novamente.');
+  }
+}

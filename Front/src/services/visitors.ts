@@ -46,14 +46,24 @@ export async function getVisitorById(visitorId: number) {
   }
 }
 
-export async function editVisitor(visitorId:number,params: CreateVisitorPayload) {
+export async function editVisitor(visitorId: number, params: CreateVisitorPayload) {
   try {
     const response = await axiosClient.put(`/visitors/${visitorId}/edit`, { ...params }, { headers: getAuthorizationHeaders() });
     return response.status === 200;
   } catch (error) {
     throw new Error('Erro no Servidor.Tente Novamente.');
   }
-  
+
+}
+
+export async function updateVisitor(visitorId: number) {
+  try {
+    const response = await axiosClient.put(`/visitors/${visitorId}`, {}, { headers: getAuthorizationHeaders() });
+    return response.status === 200;
+  } catch (error) {
+    throw new Error('Erro no Servidor.Tente Novamente.');
+  }
+
 }
 
 export async function createVisitor(params: CreateVisitorPayload): Promise<VisitorsModel> {

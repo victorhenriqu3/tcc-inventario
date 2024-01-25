@@ -17,7 +17,7 @@ import CreateVisitors from '../../components/CreateVisitors';
 import Layout from '../../components/Layout';
 import { MenuResponsive, MenuResponsiveMD } from '../../components/Menu';
 import useVisitors from '../../hooks/useVisitors';
-import { VisitorsModel, deleteVisitor } from '../../services/visitors';
+import { VisitorsModel, deleteVisitor, updateVisitor } from '../../services/visitors';
 import { CardVisitors } from './styles.visitors';
 import EditVisitorsForm from '../../components/EditVisitors';
 
@@ -43,6 +43,23 @@ export default function Visitors() {
       }
     },
     [deleteVisitor],
+  );
+
+  const handleUpdateStatus = React.useCallback(
+    async (Visitor: VisitorsModel) => {
+      const proceed = confirm('Confirmar a saída do Visitante?');
+
+      if (!proceed) return;
+
+      try {
+        await updateVisitor(Visitor.id);
+        window.location.reload();
+      } catch (error) {
+        confirm('Erro no servidor, tente novamente.');
+        throw new Error('Erro no servidor, tente novamente.');
+      }
+    },
+    [updateVisitor],
   );
 
   return (
@@ -76,7 +93,7 @@ export default function Visitors() {
               !!Visitors &&
               Visitors.map((item) => (
                 <>
-                  <CardVisitors>
+                  <CardVisitors key={item.id}>
                     <Box
                       display="flex"
                       alignItems="center"
@@ -142,16 +159,20 @@ export default function Visitors() {
                       {item.reason}
                     </Text>
 
-                    <Button
-                      color="white"
-                      size="sm"
-                      bg="#3DB273"
-                      mt={5}
-                      leftIcon={<MdCheck />}
-                      onClick={editModal.onOpen}
-                    >
-                      Confirmar Saída
-                    </Button>
+                    {item.updatedAt ? (
+                      <></>
+                    ) : (
+                      <Button
+                        color="white"
+                        size="sm"
+                        bg="#3DB273"
+                        mt={5}
+                        leftIcon={<MdCheck />}
+                        onClick={() => handleUpdateStatus(item)}
+                      >
+                        Confirmar Saída
+                      </Button>
+                    )}
                   </CardVisitors>
                 </>
               ))

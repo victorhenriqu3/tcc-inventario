@@ -37,6 +37,25 @@ export async function getAllVisitors(): Promise<VisitorsModel[]> {
   }
 }
 
+export async function getVisitorById(visitorId: number) {
+  try {
+    const response = await axiosClient.get(`/visitors/${visitorId}`, { headers: getAuthorizationHeaders() });
+    return visitorToVisitorModel(response.data)
+  } catch (error) {
+    throw new Error('Erro no Servidor.Tente Novamente.');
+  }
+}
+
+export async function editVisitor(visitorId:number,params: CreateVisitorPayload) {
+  try {
+    const response = await axiosClient.put(`/visitors/${visitorId}/edit`, { ...params }, { headers: getAuthorizationHeaders() });
+    return response.status === 200;
+  } catch (error) {
+    throw new Error('Erro no Servidor.Tente Novamente.');
+  }
+  
+}
+
 export async function createVisitor(params: CreateVisitorPayload): Promise<VisitorsModel> {
   try {
     const response = await axiosClient.post('/visitors', { ...params }, { headers: getAuthorizationHeaders() });
@@ -47,9 +66,9 @@ export async function createVisitor(params: CreateVisitorPayload): Promise<Visit
   }
 }
 
-export async function deleteVisitor(loanId: number) {
+export async function deleteVisitor(visitorId: number) {
   try {
-    const response = await axiosClient.delete(`/visitors/${loanId}`, { headers: getAuthorizationHeaders() });
+    const response = await axiosClient.delete(`/visitors/${visitorId}`, { headers: getAuthorizationHeaders() });
     return response.status === 200;
   } catch (error) {
     throw new Error('Erro no Servidor.Tente Novamente.');

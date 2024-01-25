@@ -13,6 +13,10 @@ interface CreateVisitorParams {
   user: User
 }
 
+interface EditVisitorParams extends CreateVisitorParams {
+  visitorId: number
+}
+
 class VisitorService {
   public async create({ reason, user, responsiblePerson }: CreateVisitorParams) {
     return Database.transaction(async (trx) => {
@@ -54,6 +58,25 @@ class VisitorService {
         .firstOrFail()
 
       await keyloan.delete()
+    })
+  }
+
+  public async edit({
+    visitorId,
+    reason,
+    responsiblePerson: { name, phone, cpf },
+  }: EditVisitorParams) {
+    return Database.transaction(async (trx) => {
+      const visitor = await Visitor.findOrFail(visitorId)
+      visitor.useTransaction(trx)
+      visitor.reason = reason
+      visitor.name = name
+      visitor.cpf = cpf
+      visitor.phone = phone
+
+      await visitor.save()
+
+      return visitor
     })
   }
 }

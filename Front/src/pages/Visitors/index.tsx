@@ -11,7 +11,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { MdAdd, MdCheck } from 'react-icons/md';
 import CreateVisitors from '../../components/CreateVisitors';
 import Layout from '../../components/Layout';
@@ -19,10 +19,14 @@ import { MenuResponsive, MenuResponsiveMD } from '../../components/Menu';
 import useVisitors from '../../hooks/useVisitors';
 import { VisitorsModel, deleteVisitor } from '../../services/visitors';
 import { CardVisitors } from './styles.visitors';
+import EditVisitorsForm from '../../components/EditVisitors';
 
 export default function Visitors() {
   const { Visitors } = useVisitors();
   const createModal = useDisclosure();
+  const editModal = useDisclosure();
+
+  const [visitorId, setVisitorId] = useState<number>();
 
   const handleRemove = React.useCallback(
     async (Visitor: VisitorsModel) => {
@@ -44,6 +48,7 @@ export default function Visitors() {
   return (
     <>
       <CreateVisitors isOpen={createModal.isOpen} onClose={createModal.onClose} />
+      <EditVisitorsForm isOpen={editModal.isOpen} onClose={editModal.onClose} visitorId={visitorId!} />
       <Layout>
         <Box w="100%" maxW="1040px" margin="0 50px">
           <Breadcrumb>
@@ -91,7 +96,13 @@ export default function Visitors() {
                         <MenuResponsive>
                           <MenuList>
                             <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
-                            <MenuItem>Ver Detalhes</MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                setVisitorId(item.id);
+                              }}
+                            >
+                              Ver Detalhes
+                            </MenuItem>
                           </MenuList>
                         </MenuResponsive>
                       </Box>
@@ -114,7 +125,14 @@ export default function Visitors() {
                         <MenuResponsiveMD>
                           <MenuList>
                             <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
-                            <MenuItem>Ver Detalhes</MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                setVisitorId(item.id);
+                                editModal.onOpen();
+                              }}
+                            >
+                              Ver Detalhes
+                            </MenuItem>
                           </MenuList>
                         </MenuResponsiveMD>
                       </Box>
@@ -124,7 +142,14 @@ export default function Visitors() {
                       {item.reason}
                     </Text>
 
-                    <Button color="white" size="sm" bg="#3DB273" mt={5} leftIcon={<MdCheck />}>
+                    <Button
+                      color="white"
+                      size="sm"
+                      bg="#3DB273"
+                      mt={5}
+                      leftIcon={<MdCheck />}
+                      onClick={editModal.onOpen}
+                    >
                       Confirmar Saída
                     </Button>
                   </CardVisitors>

@@ -34,8 +34,10 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('/', 'VisitorsController.getAll')
+  Route.get('/:visitorId', 'VisitorsController.getById')
   Route.post('/', 'VisitorsController.create')
   Route.put('/:visitorId', 'VisitorsController.update')
+  Route.put('/:visitorId/edit', 'VisitorsController.edit')
   Route.delete('/:visitorId', 'VisitorsController.delete')
 })
   .middleware('auth')

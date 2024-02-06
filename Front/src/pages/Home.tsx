@@ -1,8 +1,13 @@
 import { Box, Text } from '@chakra-ui/react';
-import Layout from '../components/Layout';
-import useCurrentUser from '../hooks/useCurrentUser';
 import { styled } from 'styled-components';
+import CardLastLoan from '../components/CardLastLoan';
+import CardLastVisitor from '../components/CardLastVisitor';
+import Layout from '../components/Layout';
 import media from '../helpers/media';
+import useCurrentUser from '../hooks/useCurrentUser';
+import useKeyLoans from '../hooks/useKeyLoans';
+import useVisitors from '../hooks/useVisitors';
+import { Link } from 'react-router-dom';
 
 const Main = styled.div`
   max-width: ${media.desktop};
@@ -18,13 +23,36 @@ const Container = styled.div`
 
 function Home() {
   const { user } = useCurrentUser();
+  const { Visitors } = useVisitors();
+  const { loans } = useKeyLoans();
+
   return (
     <>
       <Layout>
         <Container>
           <Main>
             <Box w="100%">
-              <Text fontSize="xl">Seja Bem-Vindo(a), {user?.name}.</Text>
+              <Text fontSize={{ base: 'lg', md: 'xl' }}>Seja Bem-Vindo(a), {user?.name}.</Text>
+            </Box>
+            <Box display="flex" flexDirection={{ base: 'column', md: 'row' }} gap={4} mt={6}>
+              {Visitors ? (
+                <>
+               
+                  <CardLastVisitor {...Visitors[0]} />
+                 
+                </>
+              ) : (
+                <></>
+              )}
+              {loans ? (
+                <>
+               
+                  <CardLastLoan {...loans[0]} keyInfo={loans[0].key} key={loans[0].id} />
+                  
+                </>
+              ) : (
+                <></>
+              )}
             </Box>
           </Main>
         </Container>

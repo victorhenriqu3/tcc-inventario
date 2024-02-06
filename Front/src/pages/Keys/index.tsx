@@ -11,7 +11,7 @@ import {
   MenuItem,
   MenuList,
   Text,
-  useDisclosure
+  useDisclosure,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
@@ -24,31 +24,27 @@ import { CardKeyLoan, DisplayEntries } from './styles.keys';
 import EditBelongingForm from '../../components/EditKeyLoan';
 
 export default function Keys() {
-
   const { loans } = useKeyLoans();
   const createModal = useDisclosure();
   const editModal = useDisclosure();
 
-  const [loanId, setLoanId] = useState<number>()
+  const [loanId, setLoanId] = useState<number>();
 
   const handleRemove = React.useCallback(
     async (Loan: KeyLoanModel) => {
-      const proceed = confirm("Tem Certeza que deseja deletar o Emprestimo?")
+      const proceed = confirm('Tem Certeza que deseja deletar o Emprestimo?');
 
-      if (!proceed) return
-
+      if (!proceed) return;
 
       try {
-        await deleteKeyLoan(Loan.id)
-        window.location.reload()
-
+        await deleteKeyLoan(Loan.id);
+        window.location.reload();
       } catch (error) {
-        throw new Error('Erro aqui')
-
+        throw new Error('Erro aqui');
       }
     },
     [deleteKeyLoan],
-  )
+  );
 
   return (
     <>
@@ -81,13 +77,22 @@ export default function Keys() {
               !!loans &&
               loans.map((item) => (
                 <CardKeyLoan key={item.id}>
-                  <Box m={1} display="flex" alignItems='center' flexDirection={{ base: 'column-reverse', md: 'row' }} justifyContent="space-between">
-                    <Box my={3} display='flex' alignItems='start' justifyContent='start' gap={3}>
-                      <Text m={0} fontWeight='600' fontSize={14}>{item.responsible_name}</Text>
-                      {' | '}
-                      <Text fontWeight='400' fontSize={14}>{item.responsible_register}</Text>
+                  <Box
+                    m={1}
+                    display="flex"
+                    alignItems="center"
+                    flexDirection={{ base: 'column-reverse', md: 'row' }}
+                    justifyContent="space-between"
+                  >
+                    <Box my={3} display="flex" alignItems="center" justifyContent="center" gap={3}>
+                      <Text m={0} fontWeight="600" fontSize={14}>
+                        {item.responsible_name}
+                      </Text>
+                      <Badge ms={2} variant="outline" colorScheme="blue">
+                        {item.responsible_register}
+                      </Badge>
                     </Box>
-                    <Box display='flex' justifyContent="space-between" >
+                    <Box display="flex" justifyContent="space-between">
                       <Badge
                         px={2}
                         borderRadius={4}
@@ -97,26 +102,36 @@ export default function Keys() {
                       >
                         {item.key.name}
                       </Badge>
-                      <Menu >
+                      <Menu>
                         <MenuButton>
                           <BsThreeDotsVertical />
                         </MenuButton>
                         <MenuList>
                           <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
-                          <MenuItem onClick={() => {
-                            setLoanId(item.id);
-                            editModal.onOpen()
-                          }}>Ver Detalhes</MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              setLoanId(item.id);
+                              editModal.onOpen();
+                            }}
+                          >
+                            Ver Detalhes
+                          </MenuItem>
                         </MenuList>
                       </Menu>
                     </Box>
                   </Box>
-                  <Box my={3} textAlign="start">{item.reason}</Box>
+                  <Box my={3} textAlign="start">
+                    {item.reason}
+                  </Box>
                   <DisplayEntries>
                     <span>Saída: {item.createdAt}</span>
                     <span>
-                      Devolução:
-                      {item.key.is_avaible ? item.updatedAt : (
+                      Devolução:{' '}
+                      {item.key.is_avaible ? (
+                        <Badge ms={2} variant="outline" colorScheme="green">
+                          {item.updatedAt}
+                        </Badge>
+                      ) : (
                         <Badge ms={2} variant="outline" colorScheme="red">
                           Não Foi devolvida.
                         </Badge>

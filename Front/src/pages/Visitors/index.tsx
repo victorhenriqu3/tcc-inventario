@@ -125,14 +125,16 @@ export default function Visitors() {
                       </Box>
 
                       <Box display="flex" gap={10} m="3">
-                        <Text fontSize="sm" fontWeight="400">
+                        <Text fontSize="sm" fontWeight="600">
                           Entrada:
-                          <br /> {item.createdAt}
+                          <br />
+                          <Text fontWeight="400">{item.createdAt}</Text> 
                         </Text>
-                        <Text fontSize="sm" fontWeight="400">
+                        <Text fontSize="sm" fontWeight="600">
                           Saída: <br />
                           {item.updatedAt ? (
-                            item.updatedAt
+                            <Badge ms={2} variant="outline" colorScheme="green">{item.updatedAt}</Badge>
+
                           ) : (
                             <Badge ms={2} variant="outline" colorScheme="red">
                               Não Saiu

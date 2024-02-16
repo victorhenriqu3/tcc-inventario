@@ -14,7 +14,7 @@ const CardLastLoan: React.FunctionComponent<KeyLoanCard> = (props) => {
           <Text fontWeight="600" fontSize={16} bg={'blue.600'} borderRadius={8} my={2} p={2}>
             Último Empréstimo
           </Text>
-          <Text fontWeight="600">{props.keyInfo?.name}</Text>
+          <Text fontWeight="600">{props.keyInfo?.name ?? 'Não houve registro ainda.'}</Text>
           <Text color="whiteAlpha.800" fontSize={12}>
           {props.responsible_name}
           </Text>
@@ -24,7 +24,7 @@ const CardLastLoan: React.FunctionComponent<KeyLoanCard> = (props) => {
           {/* <Text mt={3}>{props.reason}</Text> */}
         </CardBody>
       
-        <CardFooter display="flex" flexDirection="row">
+        <CardFooter display={props.createdAt ? 'flex' : 'none'} flexDirection="row">
           <Text fontSize="sm" fontWeight="600" me={10}>
             Entrada:
             <br />

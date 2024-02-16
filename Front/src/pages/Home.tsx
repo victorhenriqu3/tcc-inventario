@@ -7,7 +7,6 @@ import media from '../helpers/media';
 import useCurrentUser from '../hooks/useCurrentUser';
 import useKeyLoans from '../hooks/useKeyLoans';
 import useVisitors from '../hooks/useVisitors';
-import { Link } from 'react-router-dom';
 
 const Main = styled.div`
   max-width: ${media.desktop};
@@ -37,18 +36,15 @@ function Home() {
             <Box display="flex" flexDirection={{ base: 'column', md: 'row' }} gap={4} mt={6}>
               {Visitors ? (
                 <>
-               
+
                   <CardLastVisitor {...Visitors[0]} />
-                 
                 </>
               ) : (
                 <></>
               )}
               {loans ? (
                 <>
-               
-                  <CardLastLoan {...loans[0]} keyInfo={loans[0].key} key={loans[0].id} />
-                  
+                  <CardLastLoan {...loans[0]} keyInfo={loans[0]?.key} key={loans[0]?.responsible_name} />
                 </>
               ) : (
                 <></>

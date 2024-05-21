@@ -20,6 +20,7 @@ import useVisitors from '../../hooks/useVisitors';
 import { VisitorsModel, deleteVisitor, updateVisitor } from '../../services/visitors';
 import { CardVisitors } from './styles.visitors';
 import EditVisitorsForm from '../../components/EditVisitors';
+import { generateXlsx } from '../../helpers/exportTable';
 
 export default function Visitors() {
   const { Visitors } = useVisitors();
@@ -80,9 +81,21 @@ export default function Visitors() {
           </Text>
           <Box w="100%" display="flex" justifyContent="space-between" alignItems="center">
             <Input w="50%" placeholder="Pesquisar Visitante" />
-            <Button onClick={createModal.onOpen} bg="#2f80ed" color="white" variant="primary" leftIcon={<MdAdd />}>
-              Cadastrar
-            </Button>
+            <Box >
+              <Button
+                bg="#2f80ed"
+                color="white"
+                variant="primary"
+                onClick={() => generateXlsx(Visitors, 'Visitantes', 'chaves.xlsx')}
+                leftIcon={<MdAdd />}
+                marginRight={3}
+              >
+                Exportar
+              </Button>
+              <Button onClick={createModal.onOpen} bg="#118D3B" color="white" variant="primary" leftIcon={<MdAdd />}>
+                Cadastrar
+              </Button>
+            </Box>
           </Box>
           <Box mt={5} textAlign="center">
             {!!Visitors && Visitors.length === 0 ? (
@@ -128,13 +141,14 @@ export default function Visitors() {
                         <Text fontSize="sm" fontWeight="600">
                           Entrada:
                           <br />
-                          <Text fontWeight="400">{item.createdAt}</Text> 
+                          <Text fontWeight="400">{item.createdAt}</Text>
                         </Text>
                         <Text fontSize="sm" fontWeight="600">
                           Saída: <br />
                           {item.updatedAt ? (
-                            <Badge ms={2} variant="outline" colorScheme="green">{item.updatedAt}</Badge>
-
+                            <Badge ms={2} variant="outline" colorScheme="green">
+                              {item.updatedAt}
+                            </Badge>
                           ) : (
                             <Badge ms={2} variant="outline" colorScheme="red">
                               Não Saiu

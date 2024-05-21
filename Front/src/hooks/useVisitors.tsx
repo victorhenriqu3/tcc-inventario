@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
-import { VisitorsModel, getAllVisitors } from "../services/visitors";
-
+import { useEffect, useState } from 'react';
+import { VisitorsModel, getAllVisitors } from '../services/visitors';
 
 export default function useVisitors() {
-  const [Visitors, setVisitors] = useState<VisitorsModel[] | null>(null);
+  const [Visitors, setVisitors] = useState<VisitorsModel[]>([]);
   const [fetched, setFetched] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getVisitorss = async () => {
       try {
-        const allVisitors = await getAllVisitors()
+        const allVisitors = await getAllVisitors();
         setVisitors(allVisitors);
       } finally {
         setFetched(true);

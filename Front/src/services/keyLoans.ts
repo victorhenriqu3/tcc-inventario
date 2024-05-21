@@ -29,12 +29,26 @@ export interface EditKeyLoanPayload extends CreateKeyLoanPayload {
   isAvaible: boolean;
 }
 
+
 const keyLoanToLoanModel = (response: KeyLoan): KeyLoanModel => ({
   ...response,
   key: keyToKeyModel(response.key),
   createdAt: toDateOrNull(response.created_at)!,
   updatedAt: toDateOrNull(response.updated_at)!,
 });
+
+export function keyModeltoTable(data: KeyLoanModel) {
+  return {
+    Nome: data.responsible_name,
+    Telefone: data.responsible_phone,
+    'N. Matricula': data.responsible_register,
+    Motivo: data.reason,
+    Chave: data.key.name,
+    'Criado em': data.createdAt,
+    'Foi devolvido?': data.key.is_avaible ? 'Sim':'Não',
+    'Devolvido em': data.updatedAt || 'Não foi devolvido ainda',
+  };
+}
 
 export async function getAllLoans(): Promise<KeyLoanModel[]> {
   try {

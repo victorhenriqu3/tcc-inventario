@@ -22,6 +22,7 @@ import useKeyLoans from '../../hooks/useKeyLoans';
 import { KeyLoanModel, deleteKeyLoan } from '../../services/keyLoans';
 import { CardKeyLoan, DisplayEntries } from './styles.keys';
 import EditBelongingForm from '../../components/EditKeyLoan';
+import { generateXlsx } from '../../helpers/exportTable';
 
 export default function Keys() {
   const { loans } = useKeyLoans();
@@ -64,9 +65,22 @@ export default function Keys() {
           </Text>
           <Box w="100%" display="flex" justifyContent="space-between" alignItems="center">
             <Input w="50%" placeholder="Pesquisar chave" />
-            <Button bg="#2f80ed" color="white" variant="primary" onClick={createModal.onOpen} leftIcon={<MdAdd />}>
-              Cadastrar
-            </Button>
+
+            <Box>
+              <Button
+                bg="#2f80ed"
+                color="white"
+                variant="primary"
+                onClick={() => generateXlsx(loans, 'Chaves', 'chaves.xlsx')}
+                leftIcon={<MdAdd />}
+                marginRight={3}
+              >
+                Exportar
+              </Button>
+              <Button onClick={createModal.onOpen} bg="#118D3B" color="white" variant="primary" leftIcon={<MdAdd />}>
+                Cadastrar
+              </Button>
+            </Box>
           </Box>
           <Box mt={5} textAlign="center">
             {!!loans && loans.length === 0 ? (

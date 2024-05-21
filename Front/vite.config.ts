@@ -4,14 +4,14 @@ import mkcert from 'vite-plugin-mkcert';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    mkcert(),
+    //mkcert(),
     react({
       include: '**/*.tsx',
     }),
   ],
   server: {
     open: true,
-    https: true,
+    //  https: true,
     watch: {
       usePolling: true,
     },

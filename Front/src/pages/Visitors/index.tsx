@@ -27,7 +27,19 @@ export default function Visitors() {
   const createModal = useDisclosure();
   const editModal = useDisclosure();
 
+  const [searchParam] = useState(['reason','name','cpf','phone']);
+  const [searchItem, setSearchItem] = useState<string>('');
+
   const [visitorId, setVisitorId] = useState<number>();
+
+  const handleSearch = (visitors: VisitorsModel[]) => {
+    return visitors.filter((item) => {
+      return searchParam.some((newItem) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return (item as any)[newItem].toString().toLowerCase().indexOf(searchItem.toLowerCase()) > -1;
+      });
+    });
+  };
 
   const handleRemove = React.useCallback(
     async (Visitor: VisitorsModel) => {
@@ -80,8 +92,15 @@ export default function Visitors() {
             Cadastre aqui entrada e saída de Visitantes.
           </Text>
           <Box w="100%" display="flex" justifyContent="space-between" alignItems="center">
-            <Input w="50%" placeholder="Pesquisar Visitante" />
-            <Box >
+            <Input
+              w="50%"
+              placeholder="Pesquisar Visitante"
+              value={searchItem}
+              onChange={(e) => {
+                setSearchItem(e.target.value);
+              }}
+            />
+            <Box>
               <Button
                 bg="#2f80ed"
                 color="white"
@@ -98,13 +117,12 @@ export default function Visitors() {
             </Box>
           </Box>
           <Box mt={5} textAlign="center">
-            {!!Visitors && Visitors.length === 0 ? (
+            {!!handleSearch(Visitors) && handleSearch(Visitors).length === 0 ? (
               <Text mx={5} color="#afafaf">
                 Sem items
               </Text>
             ) : (
-              !!Visitors &&
-              Visitors.map((item) => (
+              handleSearch(Visitors).map((item) => (
                 <>
                   <CardVisitors key={item.id}>
                     <Box

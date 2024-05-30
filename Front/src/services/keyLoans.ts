@@ -45,7 +45,7 @@ export function keyModeltoTable(data: KeyLoanModel) {
     Motivo: data.reason,
     Chave: data.key.name,
     'Criado em': data.createdAt,
-    'Foi devolvido?': data.key.is_avaible ? 'Sim':'Não',
+    'Foi devolvido?': data.key.is_avaible ? 'Sim' : 'Não',
     'Devolvido em': data.updatedAt || 'Não foi devolvido ainda',
   };
 }

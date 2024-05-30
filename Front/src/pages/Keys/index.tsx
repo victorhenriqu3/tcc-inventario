@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Badge,
   Box,
@@ -13,7 +14,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdAdd } from 'react-icons/md';
 import CreateKeyLoans from '../../components/CreateKeyLoan';
@@ -28,8 +29,17 @@ export default function Keys() {
   const { loans } = useKeyLoans();
   const createModal = useDisclosure();
   const editModal = useDisclosure();
-
   const [loanId, setLoanId] = useState<number>();
+  const [searchParam] = useState(['reason', 'responsible_name', 'responsible_register', 'responsible_phone']);
+  const [searchItem, setSearchItem] = useState<string>('');
+
+  const handleSearch = (loans: KeyLoanModel[]) => {
+    return loans.filter((item) => {
+      return searchParam.some((newItem) => {
+        return (item as any)[newItem].toString().toLowerCase().indexOf(searchItem.toLowerCase()) > -1;
+      });
+    });
+  };
 
   const handleRemove = React.useCallback(
     async (Loan: KeyLoanModel) => {
@@ -64,14 +74,19 @@ export default function Keys() {
             Cadastre aqui entradas e saídas de chaves do claviculário.
           </Text>
           <Box w="100%" display="flex" justifyContent="space-between" alignItems="center">
-            <Input w="50%" placeholder="Pesquisar chave" />
+            <Input
+              w="50%"
+              placeholder="Pesquisar chave"
+              value={searchItem}
+              onChange={(e) => setSearchItem(e.target.value)}
+            />
 
             <Box>
               <Button
                 bg="#2f80ed"
                 color="white"
                 variant="primary"
-                onClick={() => generateXlsx(loans, 'Chaves', 'chaves.xlsx')}
+                onClick={() => generateXlsx(handleSearch(loans), 'Chaves', 'chaves.xlsx')}
                 leftIcon={<MdAdd />}
                 marginRight={3}
               >
@@ -83,13 +98,12 @@ export default function Keys() {
             </Box>
           </Box>
           <Box mt={5} textAlign="center">
-            {!!loans && loans.length === 0 ? (
+            {!!handleSearch(loans) && handleSearch(loans).length === 0 ? (
               <Text mx={5} color="#afafaf">
                 Sem items
               </Text>
             ) : (
-              !!loans &&
-              loans.map((item) => (
+              handleSearch(loans).map((item) => (
                 <CardKeyLoan key={item.id}>
                   <Box
                     m={1}

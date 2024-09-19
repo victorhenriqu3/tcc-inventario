@@ -23,11 +23,15 @@ class VisitorService {
       const visitor = new Visitor()
       visitor.useTransaction(trx)
 
+      if (responsiblePerson.cpf.length) {
+        let rawCpf = responsiblePerson.cpf.replace(/\D/g, '');
+        visitor.cpf = `***.${rawCpf.slice(3, 6)}.${rawCpf.slice(6, 9)}-**`;
+      }
+
       visitor.reason = reason
       visitor.userId = user.id
       visitor.name = responsiblePerson.name
       visitor.phone = responsiblePerson.phone
-      visitor.cpf = responsiblePerson.cpf
       await visitor.save()
 
       await visitor.load('user')

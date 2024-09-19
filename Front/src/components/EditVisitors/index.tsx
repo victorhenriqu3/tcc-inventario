@@ -116,6 +116,7 @@ const EditVisitorsForm = ({ onClose, isOpen, visitorId }: IProps) => {
                 render={({ field }) => (
                   <CPFInput
                     label="CPF"
+                    unmask={false}
                     placeholder="XXX.XXX.XXX-XX"
                     onAccept={field.onChange}
                     value={field.value}

@@ -3,27 +3,27 @@ import * as React from 'react';
 import { KeyLoanModel } from '../../services/keyLoans';
 import { KeyModel } from '../../services/Key';
 
-interface KeyLoanCard extends Omit<KeyLoanModel, "key">{
-  keyInfo: KeyModel
+interface KeyLoanCard extends Omit<KeyLoanModel, 'key'> {
+  keyInfo: KeyModel;
 }
 const CardLastLoan: React.FunctionComponent<KeyLoanCard> = (props) => {
   return (
     <>
-      <Card bg="blue.500" color="white" borderRadius={16} w="100%" as='a' href='/keys'>
+      <Card bg="blue.500" color="white" borderRadius={16} w="100%" as="a" href="/keys">
         <CardBody display="flex" flexDirection="column" justifyContent="space-between">
           <Text fontWeight="600" fontSize={16} bg={'blue.600'} borderRadius={8} my={2} p={2}>
             Último Empréstimo
           </Text>
           <Text fontWeight="600">{props.keyInfo?.name ?? 'Não houve registro ainda.'}</Text>
-          <Text color="whiteAlpha.800" fontSize={12}>
-          {props.responsible_name}
+          <Text color="whiteAlpha.800" fontSize={14}>
+            {props.responsible_name}
           </Text>
-          <Text color="whiteAlpha.800" fontSize={12}>
-          {props.responsible_phone}
+          <Text color="whiteAlpha.800" fontSize={14}>
+            {props.responsible_phone}
           </Text>
           {/* <Text mt={3}>{props.reason}</Text> */}
         </CardBody>
-      
+
         <CardFooter display={props.createdAt ? 'flex' : 'none'} flexDirection="row">
           <Text fontSize="sm" fontWeight="600" me={10}>
             Entrada:

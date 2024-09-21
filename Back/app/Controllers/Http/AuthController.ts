@@ -7,6 +7,7 @@ export default class AuthController {
     const validated = await request.validate({
       schema: schema.create({
         name: schema.string(),
+        level: schema.string(),
         email: schema.string({ trim: true }, [
           rules.email(),
           rules.unique({ table: 'users', column: 'email' }),
@@ -19,6 +20,7 @@ export default class AuthController {
       name: validated.name,
       email: validated.email,
       password: validated.password,
+      level: validated.level,
     })
 
     const token = await auth.use('api').login(user)

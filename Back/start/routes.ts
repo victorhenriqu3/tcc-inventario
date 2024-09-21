@@ -28,6 +28,8 @@ Route.get('/me', 'AuthController.currentUser').middleware('auth').prefix('/auth'
 
 Route.group(() => {
   Route.get('/', 'KeysController.index')
+  Route.get('/all', 'KeysController.showAll')
+  Route.post('/', 'KeysController.create')
 })
   .middleware('auth')
   .prefix('/keys')

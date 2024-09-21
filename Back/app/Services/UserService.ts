@@ -5,6 +5,7 @@ interface CreateUserParams {
   name: string
   email: string
   password: string
+  level: string
 }
 
 class UserService {
@@ -15,6 +16,7 @@ class UserService {
       user.useTransaction(trx)
 
       user.name = params.name
+      user.level = params.level
       user.email = params.email
       user.password = params.password
 

@@ -9,6 +9,9 @@ export default class Key extends BaseModel {
   public name: string
 
   @column()
+  public level: string
+
+  @column()
   public is_avaible: boolean
 
   @column.dateTime({ autoCreate: true })

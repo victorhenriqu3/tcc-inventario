@@ -24,7 +24,12 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
-Route.get('/me', 'AuthController.currentUser').middleware('auth').prefix('/auth')
+Route.group(() => {
+  Route.get('/me', 'AuthController.currentUser')
+  Route.get('/users', 'AuthController.getByLevel')
+})
+  .middleware('auth')
+  .prefix('/auth')
 
 Route.group(() => {
   Route.get('/', 'KeysController.index')

@@ -29,6 +29,10 @@ class UserService {
       return user
     })
   }
+
+  public async getByLevel(levels: string[]) {
+    return await User.query().whereIn('level', levels)
+  }
 }
 
 export default new UserService()

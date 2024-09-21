@@ -34,4 +34,19 @@ export default class KeysController {
 
     return await KeyService.create({ ...validated })
   }
+
+  public async update({ auth, request }: HttpContextContract) {
+    if (!auth.user) {
+      return
+    }
+    const id = request.param('keyId')
+    const validated = await request.validate({
+      schema: schema.create({
+        level: schema.string(),
+        name: schema.string(),
+      }),
+    })
+
+    return await KeyService.update({ id, ...validated })
+  }
 }

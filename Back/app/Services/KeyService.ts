@@ -17,6 +17,18 @@ class KeyService {
       return key
     })
   }
+
+  public async update({ id: keyId, name, level }: Pick<Key, 'id' | 'name' | 'level'>) {
+    return await Database.transaction(async (trx) => {
+      const key = await Key.findOrFail(keyId)
+
+      key.useTransaction(trx)
+      key.name = name
+      key.level = level
+      await key.save()
+      return key
+    })
+  }
 }
 
 export default new KeyService()

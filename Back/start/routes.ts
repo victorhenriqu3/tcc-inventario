@@ -30,6 +30,7 @@ Route.group(() => {
   Route.get('/', 'KeysController.index')
   Route.get('/all', 'KeysController.showAll')
   Route.post('/', 'KeysController.create')
+  Route.put('/:keyId', 'KeysController.update')
 })
   .middleware('auth')
   .prefix('/keys')

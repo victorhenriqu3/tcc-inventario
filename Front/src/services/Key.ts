@@ -19,7 +19,7 @@ export const keyToKeyModel = (response: Key): KeyModel => ({
 
 export async function getAllKeys(): Promise<KeyModel[]> {
   try {
-    const response = await axiosClient.get<Key[]>('/keys', { headers: getAuthorizationHeaders() });
+    const response = await axiosClient.get<Key[]>('/keys/all', { headers: getAuthorizationHeaders() });
 
     return response.data.map((key) => keyToKeyModel(key));
   } catch (error) {

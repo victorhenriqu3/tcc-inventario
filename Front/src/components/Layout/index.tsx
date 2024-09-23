@@ -44,7 +44,7 @@ const Content = styled.main`
   grid-area: content;
   overflow-y: auto;
   justify-content: center;
-  margin: 57px;
+  margin: 57px 0;
 `;
 
 export default function Layout(props: LayoutProps) {

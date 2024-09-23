@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
@@ -13,7 +13,7 @@ export const BaseInput = styled.input`
   padding: 21px 5px 8px 14px;
   margin: 8px 0;
   resize: none;
-  
+
   &.with-right-icon {
     padding-right: 45px;
   }
@@ -45,26 +45,25 @@ export const BaseInput = styled.input`
     &,
     &::placeholder,
     & + label {
-      color: "#afafaf";
+      color: '#afafaf';
     }
   }
 
   ${Container}.invalid & {
-    border-color: #da5656 ;
+    border-color: #da5656;
   }
-`
+`;
 
 export const Label = styled.label`
   position: absolute;
   top: 16px;
   left: 14px;
   color: '#3A3C3C';
-  
 
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 12px;
 
   ${BaseInput}:required:invalid + &:after {
     content: '*';
@@ -85,7 +84,7 @@ export const Label = styled.label`
 
 export const Error = styled.div`
   ${Container}.invalid + & {
-    color: #da5656 ;
+    color: #da5656;
   }
   padding-bottom: 4px;
   padding-left: 4px;

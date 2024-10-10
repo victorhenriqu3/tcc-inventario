@@ -8,6 +8,8 @@ export default class VisitorsController {
     const validated = await request.validate({
       schema: schema.create({
         reason: schema.string(),
+        nature: schema.string(),
+        evento: schema.string.optional(),
         responsiblePerson: schema.object().members({
           name: schema.string(),
           cpf: schema.string(),
@@ -41,6 +43,8 @@ export default class VisitorsController {
     const validated = await request.validate({
       schema: schema.create({
         reason: schema.string(),
+        nature: schema.string(),
+        evento: schema.string.optional(),
         responsiblePerson: schema.object().members({
           name: schema.string(),
           cpf: schema.string(),

@@ -27,7 +27,7 @@ export default function Visitors() {
   const createModal = useDisclosure();
   const editModal = useDisclosure();
 
-  const [searchParam] = useState(['reason','name','cpf','phone']);
+  const [searchParam] = useState(['reason', 'name', 'cpf', 'phone']);
   const [searchItem, setSearchItem] = useState<string>('');
 
   const [visitorId, setVisitorId] = useState<number>();
@@ -188,6 +188,9 @@ export default function Visitors() {
                         </MenuResponsiveMD>
                       </Box>
                     </Box>
+                    <Text m={3} textAlign="justify">
+                      {item.nature} {item.event_id ? `| ${item.event_id} ` : ''}
+                    </Text>
 
                     <Text m={3} textAlign="justify">
                       {item.reason}

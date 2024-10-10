@@ -14,6 +14,9 @@ import Input from '../Input';
 import PhoneInput from '../PhoneInput';
 import CPFInput from '../CPFInput/CPFInput';
 import { useLayoutEffect } from 'react';
+import SelectInput from '../SelectInput';
+import { ErrorField } from '../ErrorField';
+import SelectEvents from '../SelectKeys copy';
 
 interface IProps {
   isOpen: boolean;
@@ -31,6 +34,8 @@ const EditVisitorsForm = ({ onClose, isOpen, visitorId }: IProps) => {
   } = useForm<CreateVisitorPayload>({
     defaultValues: {
       reason: void 0,
+      nature: void 0,
+      evento_id: void 0,
       responsiblePerson: {
         name: void 0,
         cpf: void 0,
@@ -45,11 +50,12 @@ const EditVisitorsForm = ({ onClose, isOpen, visitorId }: IProps) => {
         const currentLoan = await getVisitorById(visitorId);
 
         reset({
-          reason: currentLoan.reason!,
+          reason: currentLoan.reason,
+          nature: currentLoan.nature,
           responsiblePerson: {
-            name: currentLoan.name!,
-            cpf: currentLoan.cpf!,
-            phone: currentLoan.phone!,
+            name: currentLoan.name,
+            cpf: currentLoan.cpf,
+            phone: currentLoan.phone,
           },
         });
       }
@@ -116,7 +122,6 @@ const EditVisitorsForm = ({ onClose, isOpen, visitorId }: IProps) => {
                 render={({ field }) => (
                   <CPFInput
                     label="CPF"
-                    unmask={false}
                     placeholder="XXX.XXX.XXX-XX"
                     onAccept={field.onChange}
                     value={field.value}
@@ -124,6 +129,31 @@ const EditVisitorsForm = ({ onClose, isOpen, visitorId }: IProps) => {
                   />
                 )}
               />
+
+              <Controller
+                name="nature"
+                control={control}
+                defaultValue=""
+                rules={{ required: 'Selecione uma Natureza' }}
+                render={({ field }) => (
+                  <SelectInput
+                    label="Selecione a Natureza"
+                    options={[
+                      { label: 'Evento', value: 'Evento' },
+                      { label: 'Visita Técnica', value: 'Visita_Tecnica' },
+                    ]}
+                    {...field}
+                    error={errors.nature?.message}
+                  />
+                )}
+              />
+
+              <Controller
+                name="evento_id"
+                control={control}
+                render={({ field }) => <SelectEvents label="Evento" value={field.value} onChange={field.onChange} />}
+              />
+              {!!errors.evento_id && <ErrorField>{errors.evento_id.message}</ErrorField>}
 
               <Input
                 {...register('reason', { required: 'Escreva o Motivo' })}

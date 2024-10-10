@@ -6,19 +6,21 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay,
 } from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
 import { CreateVisitorPayload, createVisitor } from '../../services/visitors';
 import CPFInput from '../CPFInput/CPFInput';
 import Input from '../Input';
 import PhoneInput from '../PhoneInput';
+import SelectInput from '../SelectInput';
+import { ErrorField } from '../ErrorField';
+import SelectEvents from '../SelectKeys copy';
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 
 const CreateVisitors = ({ isOpen, onClose }: IProps) => {
   const {
@@ -30,6 +32,8 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
   } = useForm<CreateVisitorPayload>({
     defaultValues: {
       reason: void 0,
+      nature: void 0,
+      evento_id: void 0,
       responsiblePerson: {
         name: void 0,
         cpf: void 0,
@@ -40,9 +44,9 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
   async function onSubmit(values: CreateVisitorPayload) {
     try {
       reset();
-      await createVisitor(values)
-      onClose()
-      window.location.reload()
+      await createVisitor(values);
+      onClose();
+      window.location.reload();
     } catch (_error) {
       console.error(_error);
     }
@@ -50,18 +54,19 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={() => {
-        onClose();
-        reset();
-      }}>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+          reset();
+        }}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Novo Visitante</ModalHeader>
           <ModalCloseButton />
           <ModalBody w="100%">
             <form onSubmit={handleSubmit(onSubmit)}>
-
-
               <Input
                 {...register('responsiblePerson.name', { required: 'Digite o Nome Completo' })}
                 label="Nome"
@@ -70,9 +75,9 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
               />
 
               <Controller
-                name='responsiblePerson.phone'
+                name="responsiblePerson.phone"
                 control={control}
-                defaultValue=''
+                defaultValue=""
                 rules={{
                   required: 'Digite o Telefone',
                 }}
@@ -87,9 +92,9 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
                 )}
               />
               <Controller
-                name='responsiblePerson.cpf'
+                name="responsiblePerson.cpf"
                 control={control}
-                defaultValue=''
+                defaultValue=""
                 rules={{ required: 'Digite o CPF' }}
                 render={({ field }) => (
                   <CPFInput
@@ -102,8 +107,36 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
                 )}
               />
 
-              <Input {...register('reason', { required: 'Escreva o Motivo' })}
-                label="Motivo" multiline rows={3}
+              <Controller
+                name="nature"
+                control={control}
+                defaultValue=""
+                rules={{ required: 'Selecione uma Natureza' }}
+                render={({ field }) => (
+                  <SelectInput
+                    label="Selecione a Natureza"
+                    options={[
+                      { label: 'Evento', value: 'Evento' },
+                      { label: 'Visita Técnica', value: 'Visita_Tecnica' },
+                    ]}
+                    {...field}
+                    error={errors.nature?.message}
+                  />
+                )}
+              />
+
+              <Controller
+                name="evento_id"
+                control={control}
+                render={({ field }) => <SelectEvents label="Evento" value={field.value} onChange={field.onChange} />}
+              />
+              {!!errors.evento_id && <ErrorField>{errors.evento_id.message}</ErrorField>}
+
+              <Input
+                {...register('reason', { required: 'Escreva o Motivo' })}
+                label="Motivo"
+                multiline
+                rows={3}
                 error={errors.reason?.message}
               />
               <Box my={2} me={0} display="flex" justifyContent="end">
@@ -122,4 +155,4 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
   );
 };
 
-export default CreateVisitors
+export default CreateVisitors;

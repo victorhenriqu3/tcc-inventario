@@ -6,6 +6,8 @@ export interface VisitorsModel {
   id: number;
   user_id: number;
   reason: string;
+  nature: string;
+  event_id?: number;
   name: string;
   cpf: string;
   phone: string;
@@ -15,6 +17,8 @@ export interface VisitorsModel {
 
 export interface CreateVisitorPayload {
   reason: string;
+  nature: string;
+  evento_id?: number;
   responsiblePerson: {
     name: string;
     cpf: string;

@@ -2,9 +2,12 @@ import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Text, useDiscl
 import Layout from '../../components/Layout';
 import { MdAdd } from 'react-icons/md';
 import CreateUsers from '../../components/CreateUsers';
+import useUsers from '../../hooks/useUsers';
+import CardUser from '../../components/CardUser';
 
 export default function Users() {
   const createModal = useDisclosure();
+  const { users } = useUsers();
   return (
     <>
       <CreateUsers isOpen={createModal.isOpen} onClose={createModal.onClose} />
@@ -26,6 +29,11 @@ export default function Users() {
                 Cadastrar
               </Button>
             </Box>
+          </Box>
+          <Box mt={5} textAlign="center">
+            {users?.map((item) => (
+              <CardUser {...item} key={item.id} />
+            ))}
           </Box>
         </Box>
       </Layout>

@@ -31,6 +31,9 @@ class UserService {
   }
 
   public async getByLevel(levels: string[]) {
+    if (!levels) {
+      return await User.all()
+    }
     return await User.query().whereIn('level', levels)
   }
 }

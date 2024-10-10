@@ -6,7 +6,7 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalHeader,
-  ModalOverlay
+  ModalOverlay,
 } from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
 import { CreateKeyLoanPayload, createKeyLoan } from '../../services/keyLoans';
@@ -20,7 +20,6 @@ interface IProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 
 const CreateKeyLoans = ({ isOpen, onClose }: IProps) => {
   const {
@@ -42,9 +41,9 @@ const CreateKeyLoans = ({ isOpen, onClose }: IProps) => {
   async function onSubmit(values: CreateKeyLoanPayload) {
     try {
       reset();
-      await createKeyLoan(values)
-      onClose()
-      window.location.reload()
+      await createKeyLoan(values);
+      onClose();
+      window.location.reload();
     } catch (_error) {
       console.error(_error);
     }
@@ -52,10 +51,13 @@ const CreateKeyLoans = ({ isOpen, onClose }: IProps) => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={() => {
-        onClose();
-        reset();
-      }}>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+          reset();
+        }}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Novo Empréstimo</ModalHeader>
@@ -72,7 +74,6 @@ const CreateKeyLoans = ({ isOpen, onClose }: IProps) => {
               />
               {!!errors.keyId && <ErrorField>{errors.keyId.message}</ErrorField>}
 
-
               <Input
                 {...register('responsiblePerson.name', { required: 'Digite o Nome Completo' })}
                 label="Nome"
@@ -81,9 +82,9 @@ const CreateKeyLoans = ({ isOpen, onClose }: IProps) => {
               />
 
               <Controller
-                name='responsiblePerson.phone'
+                name="responsiblePerson.phone"
                 control={control}
-                defaultValue=''
+                defaultValue=""
                 rules={{ required: 'Digite o Telefone' }}
                 render={({ field }) => (
                   <PhoneInput
@@ -95,9 +96,9 @@ const CreateKeyLoans = ({ isOpen, onClose }: IProps) => {
                 )}
               />
               <Controller
-                name='responsiblePerson.register'
+                name="responsiblePerson.register"
                 control={control}
-                defaultValue=''
+                defaultValue=""
                 rules={{ required: 'Digite a Matricula' }}
                 render={({ field }) => (
                   <RegisterInput
@@ -109,7 +110,13 @@ const CreateKeyLoans = ({ isOpen, onClose }: IProps) => {
                 )}
               />
 
-              <Input {...register('reason', { required: 'Escreva o Motivo' })} label="Motivo" multiline rows={3} error={errors.reason?.message} />
+              <Input
+                {...register('reason', { required: 'Escreva o Motivo' })}
+                label="Motivo"
+                multiline
+                rows={3}
+                error={errors.reason?.message}
+              />
               <Box my={2} me={0} display="flex" justifyContent="end">
                 <Button colorScheme="red" mr={3} onClick={onClose}>
                   Cancelar

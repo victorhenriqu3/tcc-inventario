@@ -7,6 +7,7 @@ export interface User {
   id: number;
   email: string;
   name: string;
+  level: string;
 }
 
 export interface Key {
@@ -34,6 +35,8 @@ export interface Visitor {
   id: number;
   user_id: number;
   reason: string;
+  nature: string;
+  event_id?: number;
   name: string;
   cpf: string;
   phone: string;

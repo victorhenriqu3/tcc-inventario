@@ -3,7 +3,7 @@ import { axiosClient, getAuthorizationHeaders } from './BaseApi';
 
 export async function getAllUsers(): Promise<User[]> {
   try {
-    const response = await axiosClient.get<User[]>('/keys', { headers: getAuthorizationHeaders() });
+    const response = await axiosClient.get<User[]>('/auth/users', { headers: getAuthorizationHeaders() });
 
     return response.data;
   } catch (error) {

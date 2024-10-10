@@ -36,9 +36,8 @@ export default class AuthController {
     return { ...token.toJSON(), user_id: token.user.id }
   }
 
-  public async getByLevel({ auth, request }: HttpContextContract) {
-    const levels = request.input('levels').split(',')
-
+  public async getByLevel({ request }: HttpContextContract) {
+    const levels = request.input('levels')?.split(',')
     return await UserService.getByLevel(levels)
   }
 

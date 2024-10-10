@@ -52,6 +52,12 @@ Route.group(() => {
   .prefix('/visitors')
 
 Route.group(() => {
+  Route.get('/', 'EventsController.index')
+})
+  .middleware('auth')
+  .prefix('/events')
+
+Route.group(() => {
   /*
   TODO: Create list KeyLoans with rangeDate
    */

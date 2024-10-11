@@ -16,6 +16,7 @@ import PhoneInput from '../PhoneInput';
 import SelectInput from '../SelectInput';
 import { ErrorField } from '../ErrorField';
 import SelectEvents from '../SelectKeys copy';
+import useUsers from '../../hooks/useUsers';
 
 interface IProps {
   isOpen: boolean;
@@ -28,19 +29,22 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
     control,
     register,
     reset,
+    watch,
     formState: { errors },
   } = useForm<CreateVisitorPayload>({
-    defaultValues: {
-      reason: void 0,
-      nature: void 0,
-      evento_id: void 0,
-      responsiblePerson: {
-        name: void 0,
-        cpf: void 0,
-        phone: void 0,
-      },
-    },
+    defaultValues: {},
   });
+
+  const selectedNature = watch('nature');
+
+  const natures = [
+    { label: 'Evento', value: 'Evento' },
+    { label: 'Visita Técnica', value: 'Visita_Tecnica' },
+    { label: 'Visita Institucional:', value: 'Visita_Institucional:' },
+    { label: 'Atendimento ao Público', value: 'Atendimento_Público' },
+  ];
+
+  const { users } = useUsers();
   async function onSubmit(values: CreateVisitorPayload) {
     try {
       reset();
@@ -115,22 +119,53 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
                 render={({ field }) => (
                   <SelectInput
                     label="Selecione a Natureza"
-                    options={[
-                      { label: 'Evento', value: 'Evento' },
-                      { label: 'Visita Técnica', value: 'Visita_Tecnica' },
-                    ]}
+                    options={natures}
                     {...field}
                     error={errors.nature?.message}
                   />
                 )}
               />
 
+              {selectedNature === 'Evento' && (
+                <>
+                  <Controller
+                    name="evento_id"
+                    control={control}
+                    render={({ field }) => (
+                      <SelectEvents label="Selecione um Evento" value={field.value} onChange={field.onChange} />
+                    )}
+                  />
+                  {!!errors.evento_id && <ErrorField>{errors.evento_id.message}</ErrorField>}
+                </>
+              )}
+
               <Controller
-                name="evento_id"
+                name="responsableUserId"
                 control={control}
-                render={({ field }) => <SelectEvents label="Evento" value={field.value} onChange={field.onChange} />}
+                rules={{ required: 'Selecione um Destino' }}
+                render={({ field }) => (
+                  <SelectInput
+                    label="Destino da Visita"
+                    options={users ? users?.map((user) => ({ label: user.name, value: user.id })) : []}
+                    {...field}
+                    error={errors.responsableUserId?.message}
+                  />
+                )}
               />
-              {!!errors.evento_id && <ErrorField>{errors.evento_id.message}</ErrorField>}
+
+              <Controller
+                name="responsableUserId"
+                control={control}
+                rules={{ required: 'Selecione um Servidor Responsável' }}
+                render={({ field }) => (
+                  <SelectInput
+                    label="Servidor Responsável"
+                    options={users ? users?.map((user) => ({ label: user.name, value: user.id })) : []}
+                    {...field}
+                    error={errors.responsableUserId?.message}
+                  />
+                )}
+              />
 
               <Input
                 {...register('reason', { required: 'Escreva o Motivo' })}

@@ -5,7 +5,7 @@ export interface SelectInputProps extends SelectProps {
   id?: string;
   label: string;
   error?: string;
-  options: { label: string; value: string }[];
+  options: { label: string; value: string | number }[];
 }
 
 export const SelectInput = (props: SelectInputProps) => {

@@ -19,6 +19,7 @@ export interface CreateVisitorPayload {
   reason: string;
   nature: string;
   evento_id?: number;
+  responsableUserId: number;
   responsiblePerson: {
     name: string;
     cpf: string;

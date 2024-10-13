@@ -53,6 +53,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('/', 'EventsController.index')
+  Route.post('/', 'EventsController.create')
 })
   .middleware('auth')
   .prefix('/events')

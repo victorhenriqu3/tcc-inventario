@@ -14,16 +14,16 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { MdAdd } from 'react-icons/md';
 import CreateKeyLoans from '../../components/CreateKeyLoan';
+import EditBelongingForm from '../../components/EditKeyLoan';
 import Layout from '../../components/Layout';
+import { generateXlsx } from '../../helpers/exportTable';
 import useKeyLoans from '../../hooks/useKeyLoans';
 import { KeyLoanModel, deleteKeyLoan } from '../../services/keyLoans';
 import { CardKeyLoan, DisplayEntries } from './styles.keys';
-import EditBelongingForm from '../../components/EditKeyLoan';
-import { generateXlsx } from '../../helpers/exportTable';
 
 export default function Keys() {
   const { loans } = useKeyLoans();

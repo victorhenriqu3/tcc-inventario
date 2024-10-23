@@ -27,3 +27,12 @@ export async function registerUser(user: IUserDTO) {
     throw new Error('Error no Servidor. Tente Novamente');
   }
 }
+
+export async function deleteUser(userId: number) {
+  try {
+    const response = await axiosClient.delete(`/auth/users/${userId}`, { headers: getAuthorizationHeaders() });
+    return response.status === 200;
+  } catch (error) {
+    throw new Error('Error no Servidor. Tente Novamente');
+  }
+}

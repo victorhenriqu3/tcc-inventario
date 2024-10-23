@@ -25,9 +25,6 @@ export default function Events() {
           <Box w="100%" display="flex" justifyContent="space-between" alignItems="center">
             <Input w="50%" placeholder="Pesquisar chave" />
             <Box>
-              <Button bg="#2f80ed" color="white" variant="primary" leftIcon={<MdAdd />} marginRight={3}>
-                Exportar
-              </Button>
               <Button bg="#118D3B" color="white" variant="primary" leftIcon={<MdAdd />} onClick={createModal.onOpen}>
                 Cadastrar
               </Button>
@@ -35,8 +32,8 @@ export default function Events() {
           </Box>
           <Box w="100%" display={`flex`} flexDirection={`column`}>
             {events?.map((item) => (
-              <Box my={5} key={item.id}>
-                <Text>{item.name}</Text>
+              <Box my={3} key={item.id} boxShadow={`2px 2px 4px 3px rgba(0,0,0,0.08)`} borderRadius={`10px`} p={5}>
+                <Text fontWeight="600">{item.name}</Text>
                 <Box>{item.description}</Box>
               </Box>
             ))}

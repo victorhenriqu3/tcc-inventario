@@ -36,6 +36,10 @@ class UserService {
     }
     return await User.query().whereIn('level', levels)
   }
+
+  public async deleteUser(id: number) {
+    return await User.query().where('id', id).delete()
+  }
 }
 
 export default new UserService()

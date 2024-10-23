@@ -27,6 +27,7 @@ Route.get('/', async () => {
 Route.group(() => {
   Route.get('/me', 'AuthController.currentUser')
   Route.get('/users', 'AuthController.getByLevel')
+  Route.delete('/users/:userId', 'AuthController.deleteUser')
 })
   .middleware('auth')
   .prefix('/auth')

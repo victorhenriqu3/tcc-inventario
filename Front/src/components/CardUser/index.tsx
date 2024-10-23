@@ -1,10 +1,24 @@
+import { Badge, Box, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import React from 'react';
-import { User } from '../../types';
-import { Badge, Box, Card, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { CardVisitors } from '../../pages/Visitors/styles.visitors';
+import { deleteUser } from '../../services/users';
+import { User } from '../../types';
 import { MenuResponsive, MenuResponsiveMD } from '../Menu';
 
 const CardUser: React.FunctionComponent<User> = (props) => {
+  const handleRemove = async (id: number) => {
+    const proceed = confirm('Tem Certeza que deseja deletar o Emprestimo?');
+
+    if (!proceed) return;
+
+    try {
+      await deleteUser(id);
+      window.location.reload();
+    } catch (error) {
+      throw new Error('Erro aqui');
+    }
+  };
+
   return (
     <CardVisitors key={props.id}>
       <Box
@@ -22,7 +36,7 @@ const CardUser: React.FunctionComponent<User> = (props) => {
           </Box>
           <MenuResponsive>
             <MenuList>
-              <MenuItem>Deletar</MenuItem>
+              <MenuItem onClick={() => handleRemove(props.id)}>Deletar</MenuItem>
               <MenuItem>Ver Detalhes</MenuItem>
             </MenuList>
           </MenuResponsive>

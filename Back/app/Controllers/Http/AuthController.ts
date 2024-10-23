@@ -41,6 +41,11 @@ export default class AuthController {
     return await UserService.getByLevel(levels)
   }
 
+  public async deleteUser({ request }: HttpContextContract) {
+    const userId = request.param('userId')
+    return await UserService.deleteUser(userId)
+  }
+
   public async currentUser({ auth }: HttpContextContract) {
     const { user } = auth
 

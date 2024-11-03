@@ -4,21 +4,23 @@ import Visitor from 'App/Models/Visitor'
 import VisitorService from 'App/Services/VisitorService'
 
 export default class VisitorsController {
-  public async create({ auth, request }: HttpContextContract) {
+  public async create({ request }: HttpContextContract) {
     const validated = await request.validate({
       schema: schema.create({
-        reason: schema.string(),
+        evento_id: schema.number.optional(),
         nature: schema.string(),
-        evento: schema.string.optional(),
-        responsiblePerson: schema.object().members({
+        Person: schema.object().members({
           name: schema.string(),
           cpf: schema.string(),
           phone: schema.string(),
         }),
+        reason: schema.string(),
+        responsableUserId: schema.number(),
+        key_id: schema.number(),
       }),
     })
 
-    return await VisitorService.create({ ...validated, user: auth.user! })
+    return await VisitorService.create({ ...validated })
   }
 
   public async update({ request }: HttpContextContract) {
@@ -29,30 +31,30 @@ export default class VisitorsController {
   public async getAll({ request }: HttpContextContract) {
     const { name } = request.qs()
 
-    return await Visitor.query()
-      .if(name, (query) => query.whereILike('name', `%${name}%`))
-      .orderBy('created_at', 'desc')
+    return await VisitorService.showAll(name)
   }
   public async getById({ request }: HttpContextContract) {
     const visitorId = request.param('visitorId')
     return await Visitor.findOrFail(visitorId)
   }
 
-  public async edit({ request, auth }: HttpContextContract) {
+  public async edit({ request }: HttpContextContract) {
     const visitorId = request.param('visitorId')
     const validated = await request.validate({
       schema: schema.create({
-        reason: schema.string(),
+        evento_id: schema.number.optional(),
         nature: schema.string(),
-        evento: schema.string.optional(),
-        responsiblePerson: schema.object().members({
+        Person: schema.object().members({
           name: schema.string(),
           cpf: schema.string(),
           phone: schema.string(),
         }),
+        reason: schema.string(),
+        responsableUserId: schema.number(),
+        key_id: schema.number(),
       }),
     })
-    return await VisitorService.edit({ user: auth.user!, visitorId, ...validated })
+    return await VisitorService.edit({ visitorId, ...validated })
   }
 
   public async delete({ request }: HttpContextContract) {

@@ -19,8 +19,9 @@ export interface CreateVisitorPayload {
   reason: string;
   nature: string;
   evento_id?: number;
+  key_id?: number;
   responsableUserId: number;
-  responsiblePerson: {
+  Person: {
     name: string;
     cpf: string;
     phone: string;

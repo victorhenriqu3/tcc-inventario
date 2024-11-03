@@ -1,17 +1,14 @@
 import { Select, SelectProps } from '@chakra-ui/react';
-import useKeys from '../../hooks/useKeys';
-import { Container, Error } from '../Input/styles';
 import useEvents from '../../hooks/useEvents';
+import { Container, Error } from '../Input/styles';
 
-export interface SelectKeysProps extends SelectProps {
+export interface SelectEventsProps extends SelectProps {
   id?: string;
   label: string;
   error?: string;
-  multiline?: boolean;
-  rows?: number;
 }
 
-export const SelectEvents = (props: SelectKeysProps) => {
+export const SelectEvents = (props: SelectEventsProps) => {
   const { events } = useEvents();
   const { label, error, onChange } = props;
 

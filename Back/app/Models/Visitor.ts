@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Events from './Events'
+import Key from './Key'
 
 export default class Visitor extends BaseModel {
   @column({ isPrimary: true })
@@ -11,7 +12,7 @@ export default class Visitor extends BaseModel {
   public userId: number
 
   @belongsTo(() => User)
-  public user: BelongsTo<typeof User>
+  public responsiblePerson: BelongsTo<typeof User>
 
   @column()
   public reason: string
@@ -29,10 +30,18 @@ export default class Visitor extends BaseModel {
   public nature: string
 
   @column()
-  public eventId?: number
+  public events_id?: number
 
-  @belongsTo(() => Events)
+  @belongsTo(() => Events, {
+    foreignKey: 'events_id',
+  })
   public event: BelongsTo<typeof Events>
+
+  @column()
+  public keyId?: number
+
+  @belongsTo(() => Key)
+  public key: BelongsTo<typeof Key>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

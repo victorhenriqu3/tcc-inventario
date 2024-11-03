@@ -1,5 +1,6 @@
 import { Select, SelectProps } from '@chakra-ui/react';
 import { Container, Error } from '../Input/styles';
+import React from 'react';
 
 export interface SelectInputProps extends SelectProps {
   id?: string;
@@ -8,14 +9,15 @@ export interface SelectInputProps extends SelectProps {
   options: { label: string; value: string | number }[];
 }
 
-export const SelectInput = (props: SelectInputProps) => {
+export const SelectInput = React.forwardRef<HTMLInputElement, SelectInputProps>(function Input(props, ref) {
   //debugger;
-  const { label, error, onChange } = props;
+  const { label, error, onChange, id } = props;
 
   return (
     <>
       <Container className={error ? 'invalid' : void 0}>
         <Select
+          id={id}
           placeholder={label}
           border={`1px solid ${error ? '#da5656' : '#cbdbff'} `}
           borderRadius="10px"
@@ -32,6 +34,6 @@ export const SelectInput = (props: SelectInputProps) => {
       {error ? <Error>{error}</Error> : null}
     </>
   );
-};
+});
 
 export default SelectInput;

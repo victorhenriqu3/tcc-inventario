@@ -20,13 +20,7 @@ interface IProps {
 }
 
 const CreateUsers = ({ isOpen, onClose }: IProps) => {
-  const {
-    handleSubmit,
-    control,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm<IUserDTO>({
+  const { handleSubmit, control, register, reset } = useForm<IUserDTO>({
     defaultValues: {
       name: void 0,
       email: void 0,
@@ -35,7 +29,7 @@ const CreateUsers = ({ isOpen, onClose }: IProps) => {
       password_confirmation: void 0,
     },
   });
-  async function onSubmit(values: any) {
+  async function onSubmit(values: IUserDTO) {
     try {
       reset();
       await registerUser(values);

@@ -1,3 +1,5 @@
+import { Events } from "../services/Events";
+
 export interface Authorization {
   userId: string;
   accessToken: string;
@@ -34,9 +36,13 @@ export interface KeyLoan {
 export interface Visitor {
   id: number;
   user_id: number;
+  responsiblePerson: User;
   reason: string;
   nature: string;
   event_id?: number;
+  event: Events;
+  key_id?: number;
+  key: Key;
   name: string;
   cpf: string;
   phone: string;

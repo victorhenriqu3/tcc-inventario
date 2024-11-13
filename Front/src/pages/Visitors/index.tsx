@@ -123,95 +123,96 @@ export default function Visitors() {
               </Text>
             ) : (
               handleSearch(Visitors).map((item) => (
-                <>
-                  <CardVisitors key={item.id}>
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
-                      flexDirection={{ base: 'column', md: 'row' }}
-                    >
-                      <Box display="flex" alignItems="center">
-                        {' '}
-                        <Box m={3} display="flex" flexDirection="column" alignItems="start">
-                          <Text fontSize="md" fontWeight="600">
-                            {item.name}
-                          </Text>
-                          <Text fontSize="sm" fontWeight="400" color="gray.500">
-                            {item.cpf} {item.phone ? `| ${item.phone} ` : ''}
-                          </Text>
-                        </Box>
-                        <MenuResponsive>
-                          <MenuList>
-                            <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
-                            <MenuItem
-                              onClick={() => {
-                                setVisitorId(item.id);
-                              }}
-                            >
-                              Ver Detalhes
-                            </MenuItem>
-                          </MenuList>
-                        </MenuResponsive>
-                      </Box>
-
-                      <Box display="flex" gap={10} m="3">
-                        <Text fontSize="sm" fontWeight="600">
-                          Entrada:
-                          <br />
-                          <Text fontWeight="400">{item.createdAt}</Text>
+                <CardVisitors key={item.id}>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    flexDirection={{ base: 'column', md: 'row' }}
+                  >
+                    <Box display="flex" alignItems="center">
+                      {' '}
+                      <Box m={3} display="flex" flexDirection="column" alignItems="start">
+                        <Text fontSize="md" fontWeight="600">
+                          {item.name}
                         </Text>
-                        <Text fontSize="sm" fontWeight="600">
-                          Saída: <br />
-                          {item.updatedAt ? (
-                            <Badge ms={2} variant="outline" colorScheme="green">
-                              {item.updatedAt}
-                            </Badge>
-                          ) : (
-                            <Badge ms={2} variant="outline" colorScheme="red">
-                              Não Saiu
-                            </Badge>
-                          )}
+                        <Text fontSize="sm" fontWeight="400" color="gray.500">
+                          {item.cpf} {item.phone ? `| ${item.phone} ` : ''}
                         </Text>
-                        <MenuResponsiveMD>
-                          <MenuList>
-                            <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
-                            <MenuItem
-                              onClick={() => {
-                                setVisitorId(item.id);
-                                editModal.onOpen();
-                              }}
-                            >
-                              Ver Detalhes
-                            </MenuItem>
-                          </MenuList>
-                        </MenuResponsiveMD>
                       </Box>
+                      <MenuResponsive>
+                        <MenuList>
+                          <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              setVisitorId(item.id);
+                            }}
+                          >
+                            Ver Detalhes
+                          </MenuItem>
+                        </MenuList>
+                      </MenuResponsive>
                     </Box>
-                    <Text m={3} textAlign="justify">
-                      {item.nature} {item.event_id ? `| ${item.event_id} ` : ''}
-                    </Text>
 
-                    <Text m={3} textAlign="justify">
-                      {item.reason}
-                    </Text>
+                    <Box display="flex" gap={10} m="3">
+                      <Text fontSize="sm" fontWeight="600">
+                        Entrada:
+                        <br />
+                        <Text fontWeight="400">{item.createdAt}</Text>
+                      </Text>
+                      <Text fontSize="sm" fontWeight="600">
+                        Saída: <br />
+                        {item.updatedAt ? (
+                          <Badge ms={2} variant="outline" colorScheme="green">
+                            {item.updatedAt}
+                          </Badge>
+                        ) : (
+                          <Badge ms={2} variant="outline" colorScheme="red">
+                            Não Saiu
+                          </Badge>
+                        )}
+                      </Text>
+                      <MenuResponsiveMD>
+                        <MenuList>
+                          <MenuItem onClick={() => handleRemove(item)}>Deletar</MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              setVisitorId(item.id);
+                              editModal.onOpen();
+                            }}
+                          >
+                            Ver Detalhes
+                          </MenuItem>
+                        </MenuList>
+                      </MenuResponsiveMD>
+                    </Box>
+                  </Box>
+                  <Text m={3} textAlign="justify">
+                    {item.nature} {item.event ? `| ${item.event.name} ` : ''}
+                  </Text>
+                  <Text fontSize="sm" fontWeight="400" color="gray.500" m={3} textAlign="justify">
+                    {item.responsiblePerson.name} ({item.key.name})
+                  </Text>
 
-                    {item.updatedAt ? (
-                      <></>
-                    ) : (
-                      <Button
-                        color="white"
-                        size="sm"
-                        bg="#3DB273"
-                        mt={5}
-                        leftIcon={<MdCheck />}
-                        onClick={() => handleUpdateStatus(item)}
-                      >
-                        Confirmar Saída
-                      </Button>
-                    )}
-                  </CardVisitors>
-                </>
+                  {/* <Text m={3} textAlign="justify">
+                    {item.reason}
+                  </Text> */}
+
+                  {item.updatedAt ? (
+                    <></>
+                  ) : (
+                    <Button
+                      color="white"
+                      size="sm"
+                      bg="#3DB273"
+                      mt={5}
+                      leftIcon={<MdCheck />}
+                      onClick={() => handleUpdateStatus(item)}
+                    >
+                      Confirmar Saída
+                    </Button>
+                  )}
+                </CardVisitors>
               ))
             )}
           </Box>

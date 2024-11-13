@@ -11,7 +11,6 @@ import {
 import { useForm } from 'react-hook-form';
 
 import { Events, registerEvents } from '../../services/Events';
-import { registerUser } from '../../services/users';
 import Input from '../Input';
 
 interface IProps {
@@ -20,19 +19,13 @@ interface IProps {
 }
 
 const CreateEvents = ({ isOpen, onClose }: IProps) => {
-  const {
-    handleSubmit,
-    control,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm<Events>({
+  const { handleSubmit, register, reset } = useForm<Events>({
     defaultValues: {
       name: void 0,
       description: void 0,
     },
   });
-  async function onSubmit(values: any) {
+  async function onSubmit(values: Events) {
     try {
       reset();
       await registerEvents(values);

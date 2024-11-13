@@ -15,8 +15,8 @@ import {
   Tr,
   useDisclosure,
 } from '@chakra-ui/react';
-import { MdAdd, MdErrorOutline } from 'react-icons/md';
 import { FaRegTrashAlt } from 'react-icons/fa';
+import { MdAdd } from 'react-icons/md';
 import CreateUsers from '../../components/CreateUsers';
 import Layout from '../../components/Layout';
 import useUsers from '../../hooks/useUsers';

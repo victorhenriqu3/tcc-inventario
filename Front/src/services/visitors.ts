@@ -1,13 +1,19 @@
+
 import { toDateOrNull } from '../helpers/toDateOrNull';
-import { Visitor } from '../types';
+import { Key, User, Visitor } from '../types';
 import { axiosClient, getAuthorizationHeaders } from './BaseApi';
+import { Events } from './Events';
 
 export interface VisitorsModel {
   id: number;
   user_id: number;
+  responsiblePerson: User;
   reason: string;
   nature: string;
   event_id?: number;
+  event: Events;
+  key_id?: number;
+  key: Key;
   name: string;
   cpf: string;
   phone: string;
@@ -48,7 +54,6 @@ export function visitorModeltoTable(data: VisitorsModel) {
 export async function getAllVisitors(): Promise<VisitorsModel[]> {
   try {
     const response = await axiosClient.get<Visitor[]>('/visitors', { headers: getAuthorizationHeaders() });
-
     return response.data.map((visitor) => visitorToVisitorModel(visitor));
   } catch (error) {
     throw new Error('Erro no Servidor.Tente Novamente.');

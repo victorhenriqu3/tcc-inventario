@@ -5,6 +5,9 @@ import { axiosClient, getAuthorizationHeaders } from './BaseApi';
 export interface KeyModel {
   id: number;
   name: string;
+  bloco: string;
+  piso: string;
+  numero: string;
   is_avaible: boolean;
   createdAt: string;
   updatedAt: string;

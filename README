@@ -1,9 +1,9 @@
 TODO:
 
 - [x] Back - formatar CPF;
-- [] Listar Usuarios;
+- [x] Listar Usuarios;
 - [] Criar Chaves;
-- [] Listar Chaves
-- [] listar Naturezas;
-- [] Criar naturezas;
-- [] listar Naturezas;
+- [x] Listar Chaves
+- [x] listar Naturezas;
+- [x] Criar Eventos;
+- [x] listar Eventos;

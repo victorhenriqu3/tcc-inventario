@@ -17,7 +17,7 @@ export default class KeysController {
     if (!auth.user) {
       return
     }
-    return await Key.query().orderBy('created_at', 'desc')
+    return await KeyService.getAllWithNames()
   }
 
   public async create({ auth, request }: HttpContextContract) {

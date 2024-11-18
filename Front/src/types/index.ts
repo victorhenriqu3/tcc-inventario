@@ -16,6 +16,9 @@ export interface Key {
   id: number;
   name: string;
   is_avaible: number;
+  bloco: string;
+  piso: string;
+  numero: string;
   created_at: string | null;
   updated_at: string | null;
 }

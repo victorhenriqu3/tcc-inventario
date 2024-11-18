@@ -14,13 +14,17 @@ import {
 import React, { useState } from 'react';
 import { MdAdd, MdCheck } from 'react-icons/md';
 import CreateVisitors from '../../components/CreateVisitors';
+import EditVisitorsForm from '../../components/EditVisitors';
 import Layout from '../../components/Layout';
 import { MenuResponsive, MenuResponsiveMD } from '../../components/Menu';
+import SelectInput from '../../components/SelectInput';
+import { generateXlsx } from '../../helpers/exportTable';
 import useVisitors from '../../hooks/useVisitors';
 import { VisitorsModel, deleteVisitor, updateVisitor } from '../../services/visitors';
+
+import { getNature } from '../../types/Enums/ENature';
+import { getPiso } from '../../types/Enums/EPiso';
 import { CardVisitors } from './styles.visitors';
-import EditVisitorsForm from '../../components/EditVisitors';
-import { generateXlsx } from '../../helpers/exportTable';
 
 export default function Visitors() {
   const { Visitors } = useVisitors();
@@ -32,12 +36,31 @@ export default function Visitors() {
 
   const [visitorId, setVisitorId] = useState<number>();
 
+  const [selectedPiso, setSelectedPiso] = useState<string | null>(null);
+  const [selectedBloco, setSelectedBloco] = useState<string | null>(null);
+
+  const blocos = [
+    { value: 'A', label: 'A' },
+    { value: 'B', label: 'B' },
+    { value: 'C', label: 'C' },
+  ];
+
+  const pisos = [
+    { value: 'SUPERIOR', label: 'Superior' },
+    { value: 'TERREO', label: 'Térreo' },
+  ];
+
   const handleSearch = (visitors: VisitorsModel[]) => {
     return visitors.filter((item) => {
-      return searchParam.some((newItem) => {
+      const matchesSearch = searchParam.some((newItem) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return (item as any)[newItem].toString().toLowerCase().indexOf(searchItem.toLowerCase()) > -1;
+        return (item as any)[newItem]?.toString().toLowerCase().includes(searchItem.toLowerCase());
       });
+
+      const matchesPiso = selectedPiso ? item.key?.piso === selectedPiso : true;
+      const matchesBloco = selectedBloco ? item.key?.bloco === selectedBloco : true;
+
+      return matchesSearch && matchesPiso && matchesBloco;
     });
   };
 
@@ -105,7 +128,7 @@ export default function Visitors() {
                 bg="#2f80ed"
                 color="white"
                 variant="primary"
-                onClick={() => generateXlsx(Visitors, 'Visitantes', 'chaves.xlsx')}
+                onClick={() => generateXlsx(Visitors, 'Visitantes')}
                 leftIcon={<MdAdd />}
                 marginRight={3}
               >
@@ -115,6 +138,22 @@ export default function Visitors() {
                 Cadastrar
               </Button>
             </Box>
+          </Box>
+          <Box display={`flex`} gap={`10px`}>
+            <SelectInput
+              label={`Piso`}
+              options={pisos}
+              maxWidth={`200px`}
+              width={`100%`}
+              onChange={(option) => setSelectedPiso(option.target.value || null)}
+            />
+            <SelectInput
+              label={`Bloco`}
+              options={blocos}
+              maxWidth={`200px`}
+              width={`100%`}
+              onChange={(option) => setSelectedBloco(option.target.value || null)}
+            />
           </Box>
           <Box mt={5} textAlign="center">
             {!!handleSearch(Visitors) && handleSearch(Visitors).length === 0 ? (
@@ -188,10 +227,11 @@ export default function Visitors() {
                     </Box>
                   </Box>
                   <Text m={3} textAlign="justify">
-                    {item.nature} {item.event ? `| ${item.event.name} ` : ''}
+                    {getNature(item.nature)} {item.event ? `| ${item.event.name} ` : ''}
                   </Text>
                   <Text fontSize="sm" fontWeight="400" color="gray.500" m={3} textAlign="justify">
-                    {item.responsiblePerson.name} ({item.key.name})
+                    {item.responsiblePerson.name} ( {item.key.name} | Bloco {item.key.bloco} | {getPiso(item.key.piso)}{' '}
+                    )
                   </Text>
 
                   {/* <Text m={3} textAlign="justify">

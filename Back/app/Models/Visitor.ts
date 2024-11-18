@@ -38,7 +38,7 @@ export default class Visitor extends BaseModel {
   public event: BelongsTo<typeof Events>
 
   @column()
-  public keyId?: number
+  public keyId: number
 
   @belongsTo(() => Key)
   public key: BelongsTo<typeof Key>

@@ -18,6 +18,7 @@ import { ErrorField } from '../ErrorField';
 import SelectEvents from '../SelectEvents';
 import useUsers from '../../hooks/useUsers';
 import SelectKeys from '../SelectKeys';
+import { getNaturesFromEnum } from '../../types/Enums/ENature';
 
 interface IProps {
   isOpen: boolean;
@@ -38,21 +39,16 @@ const CreateVisitors = ({ isOpen, onClose }: IProps) => {
 
   const selectedNature = watch('nature');
 
-  const natures = [
-    { label: 'Evento', value: 'Evento' },
-    { label: 'Visita Técnica', value: 'Visita_Tecnica' },
-    { label: 'Visita Institucional:', value: 'Visita_Institucional:' },
-    { label: 'Atendimento ao Público', value: 'Atendimento_Público' },
-  ];
+  const natures = getNaturesFromEnum();
 
   const { users } = useUsers();
   async function onSubmit(values: CreateVisitorPayload) {
     try {
-      //reset();
+      reset();
       await createVisitor(values);
       console.table(values);
       onClose();
-      //window.location.reload();
+      window.location.reload();
     } catch (_error) {
       console.error(_error);
     }

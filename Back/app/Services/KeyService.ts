@@ -1,4 +1,5 @@
 import Database from '@ioc:Adonis/Lucid/Database'
+import { getPiso } from 'App/Enums/KeyEnum'
 import Key from 'App/Models/Key'
 import { DateTime } from 'luxon'
 
@@ -28,6 +29,17 @@ class KeyService {
       await key.save()
       return key
     })
+  }
+
+  public async getAllWithNames(): Promise<Key[]> {
+    const keys: Key[] = await Database.from(Key.table).orderBy('created_at', 'desc')
+    const keysFormatted = keys.map(({ name, bloco, piso, ...rest }: Key) => ({
+      name: `${name} - Bloco ${bloco} - ${getPiso(piso)}`,
+      bloco,
+      piso,
+      ...rest,
+    }))
+    return keysFormatted
   }
 }
 

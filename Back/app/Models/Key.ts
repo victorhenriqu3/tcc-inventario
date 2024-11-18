@@ -9,6 +9,15 @@ export default class Key extends BaseModel {
   public name: string
 
   @column()
+  public bloco: string
+
+  @column()
+  public piso: string
+
+  @column()
+  public numero: string
+
+  @column()
   public level: string
 
   @column()

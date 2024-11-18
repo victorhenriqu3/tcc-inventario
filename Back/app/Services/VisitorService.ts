@@ -47,7 +47,9 @@ class VisitorService {
       await visitor.save()
 
       await visitor.load('responsiblePerson')
-      await visitor.load('event')
+
+      if (evento_id) await visitor.load('event')
+
       await visitor.load('key')
 
       return visitor

@@ -46,6 +46,8 @@ export function visitorModeltoTable(data: VisitorsModel) {
     Telefone: data.phone,
     Documento: data.cpf,
     Motivo: data.reason,
+    Bloco: data.key.bloco,
+    Piso: data.key.piso,
     Saída: data.updatedAt ? 'Concluído' : 'Pendente',
     'Entrou em': data.createdAt,
     'Saiu em': data.updatedAt || 'Não Saiu ainda',

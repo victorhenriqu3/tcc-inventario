@@ -24,6 +24,7 @@ import { generateXlsx } from '../../helpers/exportTable';
 import useKeyLoans from '../../hooks/useKeyLoans';
 import { KeyLoanModel, deleteKeyLoan } from '../../services/keyLoans';
 import { CardKeyLoan, DisplayEntries } from './styles.keys';
+import SelectInput from '../../components/SelectInput';
 
 export default function Keys() {
   const { loans } = useKeyLoans();
@@ -33,11 +34,30 @@ export default function Keys() {
   const [searchParam] = useState(['reason', 'responsible_name', 'responsible_register', 'responsible_phone']);
   const [searchItem, setSearchItem] = useState<string>('');
 
+  const [selectedPiso, setSelectedPiso] = useState<string | null>(null);
+  const [selectedBloco, setSelectedBloco] = useState<string | null>(null);
+
+  const blocos = [
+    { value: 'A', label: 'A' },
+    { value: 'B', label: 'B' },
+    { value: 'C', label: 'C' },
+  ];
+
+  const pisos = [
+    { value: 'SUPERIOR', label: 'Superior' },
+    { value: 'TERREO', label: 'Térreo' },
+  ];
+
   const handleSearch = (loans: KeyLoanModel[]) => {
     return loans.filter((item) => {
-      return searchParam.some((newItem) => {
+      const matchesSearch = searchParam.some((newItem) => {
         return (item as any)[newItem].toString().toLowerCase().indexOf(searchItem.toLowerCase()) > -1;
       });
+
+      const matchesPiso = selectedPiso ? item.key?.piso === selectedPiso : true;
+      const matchesBloco = selectedBloco ? item.key?.bloco === selectedBloco : true;
+
+      return matchesSearch && matchesPiso && matchesBloco;
     });
   };
 
@@ -86,7 +106,7 @@ export default function Keys() {
                 bg="#2f80ed"
                 color="white"
                 variant="primary"
-                onClick={() => generateXlsx(handleSearch(loans), 'Chaves', 'chaves.xlsx')}
+                onClick={() => generateXlsx(handleSearch(loans), 'Chaves')}
                 leftIcon={<MdAdd />}
                 marginRight={3}
               >
@@ -96,6 +116,24 @@ export default function Keys() {
                 Cadastrar
               </Button>
             </Box>
+          </Box>
+          <Box display={`flex`} gap={`10px`}>
+            <SelectInput
+              label={`Piso`}
+              options={pisos}
+              maxWidth={`200px`}
+              width={`100%`}
+              value={selectedPiso!}
+              onChange={(option) => setSelectedPiso(option.target.value || null)}
+            />
+            <SelectInput
+              label={`Bloco`}
+              options={blocos}
+              maxWidth={`200px`}
+              value={selectedBloco!}
+              width={`100%`}
+              onChange={(option) => setSelectedBloco(option.target.value || null)}
+            />
           </Box>
           <Box mt={5} textAlign="center">
             {!!handleSearch(loans) && handleSearch(loans).length === 0 ? (
@@ -128,7 +166,7 @@ export default function Keys() {
                         mx={5}
                         colorScheme={`${item.key.is_avaible ? 'green' : 'red'}`}
                       >
-                        {item.key.name}
+                        {`${item.key.name} - Bloco ${item.key.bloco} - ${item.key.piso}`}
                       </Badge>
                       <Menu>
                         <MenuButton>

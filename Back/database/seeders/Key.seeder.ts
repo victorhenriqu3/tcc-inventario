@@ -15,7 +15,7 @@ export default class extends BaseSeeder {
       },
       {
         name: 'Sala de aula 2',
-        is_avaible: false,
+        is_avaible: true,
         level: 'TEA',
         bloco: 'A',
         piso: 'SUPERIOR',
@@ -39,7 +39,7 @@ export default class extends BaseSeeder {
       },
       {
         name: 'Sala de aula 5',
-        is_avaible: false,
+        is_avaible: true,
         level: 'PROFESSOR',
         bloco: 'C',
         piso: 'TERREO',
@@ -55,7 +55,7 @@ export default class extends BaseSeeder {
       },
       {
         name: 'Sala de aula 7',
-        is_avaible: false,
+        is_avaible: true,
         level: 'ADMIN',
         bloco: 'A',
         piso: 'TERREO',
@@ -79,7 +79,7 @@ export default class extends BaseSeeder {
       },
       {
         name: 'Sala de aula 10',
-        is_avaible: false,
+        is_avaible: true,
         level: 'TEA',
         bloco: 'B',
         piso: 'SUPERIOR',

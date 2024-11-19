@@ -44,6 +44,8 @@ export function keyModeltoTable(data: KeyLoanModel) {
     'N. Matricula': data.responsible_register,
     Motivo: data.reason,
     Chave: data.key.name,
+    Bloco: data.key.bloco,
+    Piso: data.key.piso,
     'Criado em': data.createdAt,
     'Foi devolvido?': data.key.is_avaible ? 'Sim' : 'Não',
     'Devolvido em': data.updatedAt || 'Não foi devolvido ainda',

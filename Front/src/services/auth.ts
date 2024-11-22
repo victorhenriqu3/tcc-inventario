@@ -37,6 +37,7 @@ export async function getCurrentUser() {
 
     return response.data;
   } catch (error) {
+    localStorage.clear();
     throw new Error('Não foi possível identificar. Tente Novamente.');
   }
 }

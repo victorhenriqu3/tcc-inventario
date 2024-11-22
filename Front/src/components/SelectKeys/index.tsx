@@ -9,10 +9,11 @@ export interface SelectKeysProps extends SelectProps {
   error?: string;
   multiline?: boolean;
   rows?: number;
+  onlyAvaible?: boolean;
 }
 
 export const SelectKeys = React.forwardRef<HTMLInputElement, SelectKeysProps>(function Input(props, ref) {
-  const { keys } = useKeys();
+  const { keys } = useKeys(props.onlyAvaible);
   const { label, error, onChange } = props;
 
   return (

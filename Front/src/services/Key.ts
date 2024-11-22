@@ -26,6 +26,18 @@ export async function getAllKeys(): Promise<KeyModel[]> {
 
     return response.data.map((key) => keyToKeyModel(key));
   } catch (error) {
+    localStorage.clear();
+    throw new Error('Error no Servidor. Tente Novamente');
+  }
+}
+
+export async function getAllAvaibleKeys(): Promise<KeyModel[]> {
+  try {
+    const response = await axiosClient.get<Key[]>('/keys/', { headers: getAuthorizationHeaders() });
+
+    return response.data.map((key) => keyToKeyModel(key));
+  } catch (error) {
+    localStorage.clear();
     throw new Error('Error no Servidor. Tente Novamente');
   }
 }

@@ -31,8 +31,8 @@ class KeyService {
     })
   }
 
-  public async getAllWithNames(): Promise<Key[]> {
-    const keys: Key[] = await Database.from(Key.table).orderBy('created_at', 'desc')
+  public async getAllWithNames(isAvaible?: boolean): Promise<Key[]> {
+    const keys: Key[] = await Database.from(Key.table).orderBy('created_at', 'desc').orderBy('bloco', 'asc').if(isAvaible, (query) => query.where('is_avaible', true))
     const keysFormatted = keys.map(({ name, bloco, piso, ...rest }: Key) => ({
       name: `${name} - Bloco ${bloco} - ${getPiso(piso)}`,
       bloco,

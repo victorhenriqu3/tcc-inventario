@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { KeyModel, getAllKeys } from "../services/Key";
+import { useEffect, useState } from 'react';
+import { KeyModel, getAllAvaibleKeys, getAllKeys } from '../services/Key';
 
-export default function useKeys() {
+export default function useKeys(onlyAvaible?: boolean) {
   const [keys, setKeys] = useState<KeyModel[] | null>(null);
   const [fetched, setFetched] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -9,7 +9,7 @@ export default function useKeys() {
   useEffect(() => {
     const getKeys = async () => {
       try {
-        const allLoans = await getAllKeys()
+        const allLoans = onlyAvaible ? await getAllAvaibleKeys() : await getAllKeys();
         setKeys(allLoans);
       } finally {
         setFetched(true);

@@ -6,9 +6,9 @@ export default class UpdateKeysTable extends BaseSchema {
   public async up() {
     this.schema.alterTable(this.tableName, (table) => {
       table.string('name').unique().notNullable().alter()
-      table.string(`Bloco`).notNullable()
-      table.string(`Piso`).notNullable()
-      table.string(`Numero`).notNullable()
+      table.string(`bloco`).notNullable()
+      table.string(`piso`).notNullable()
+      table.string(`numero`).notNullable()
     })
   }
 

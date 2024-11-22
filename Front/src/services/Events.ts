@@ -15,6 +15,7 @@ export async function getAllEvents(): Promise<Events[]> {
 
     return response.data
   } catch (error) {
+    localStorage.clear();
     throw new Error('Error no Servidor. Tente Novamente');
   }
 }
@@ -24,6 +25,7 @@ export async function registerEvents(event: Pick<Events, 'name' | 'description'>
     const response = await axiosClient.post<Events>('/events', event, { headers: getAuthorizationHeaders() });
     return response.data;
   } catch (error) {
+    localStorage.clear();
     throw new Error('Error no Servidor. Tente Novamente');
   }
 }

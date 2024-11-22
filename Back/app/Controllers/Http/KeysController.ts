@@ -10,7 +10,7 @@ export default class KeysController {
     if (!auth.user) {
       return
     }
-    return await Database.from(Key.table).where('is_avaible', true)
+    return await KeyService.getAllWithNames(true)
   }
 
   public async showAll({ auth }: HttpContextContract) {

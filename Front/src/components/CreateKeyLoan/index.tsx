@@ -70,7 +70,9 @@ const CreateKeyLoans = ({ isOpen, onClose }: IProps) => {
                   required: 'Escolha uma chave.',
                 }}
                 control={control}
-                render={({ field }) => <SelectKeys label="Chave" value={field.value} onChange={field.onChange} />}
+                render={({ field }) => (
+                  <SelectKeys label="Chave" value={field.value} onChange={field.onChange} onlyAvaible />
+                )}
               />
               {!!errors.keyId && <ErrorField>{errors.keyId.message}</ErrorField>}
 

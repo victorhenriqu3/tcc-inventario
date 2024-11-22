@@ -58,6 +58,7 @@ export async function getAllVisitors(): Promise<VisitorsModel[]> {
     const response = await axiosClient.get<Visitor[]>('/visitors', { headers: getAuthorizationHeaders() });
     return response.data.map((visitor) => visitorToVisitorModel(visitor));
   } catch (error) {
+    localStorage.clear();
     throw new Error('Erro no Servidor.Tente Novamente.');
   }
 }
@@ -67,7 +68,8 @@ export async function getVisitorById(visitorId: number) {
     const response = await axiosClient.get(`/visitors/${visitorId}`, { headers: getAuthorizationHeaders() });
     return visitorToVisitorModel(response.data);
   } catch (error) {
-    throw new Error('Erro no Servidor.Tente Novamente.');
+    localStorage.clear();
+    throw new Error('Não foi possível identificar. Tente Novamente.');
   }
 }
 
@@ -80,7 +82,8 @@ export async function editVisitor(visitorId: number, params: CreateVisitorPayloa
     );
     return response.status === 200;
   } catch (error) {
-    throw new Error('Erro no Servidor.Tente Novamente.');
+    localStorage.clear();
+    throw new Error('Não foi possível identificar. Tente Novamente.');
   }
 }
 
@@ -89,7 +92,8 @@ export async function updateVisitor(visitorId: number) {
     const response = await axiosClient.put(`/visitors/${visitorId}`, {}, { headers: getAuthorizationHeaders() });
     return response.status === 200;
   } catch (error) {
-    throw new Error('Erro no Servidor.Tente Novamente.');
+    localStorage.clear();
+    throw new Error('Não foi possível identificar. Tente Novamente.');
   }
 }
 
@@ -99,7 +103,8 @@ export async function createVisitor(params: CreateVisitorPayload): Promise<Visit
 
     return visitorToVisitorModel(response.data);
   } catch (error) {
-    throw new Error('Erro no Servidor.Tente Novamente.');
+    localStorage.clear();
+    throw new Error('Não foi possível identificar. Tente Novamente.');
   }
 }
 
@@ -108,6 +113,7 @@ export async function deleteVisitor(visitorId: number) {
     const response = await axiosClient.delete(`/visitors/${visitorId}`, { headers: getAuthorizationHeaders() });
     return response.status === 200;
   } catch (error) {
-    throw new Error('Erro no Servidor.Tente Novamente.');
+    localStorage.clear();
+    throw new Error('Não foi possível identificar. Tente Novamente.');
   }
 }

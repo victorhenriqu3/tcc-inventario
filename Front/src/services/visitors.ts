@@ -3,6 +3,7 @@ import { toDateOrNull } from '../helpers/toDateOrNull';
 import { Key, User, Visitor } from '../types';
 import { axiosClient, getAuthorizationHeaders } from './BaseApi';
 import { Events } from './Events';
+import { KeyModel, keyToKeyModel } from './Key';
 
 export interface VisitorsModel {
   id: number;
@@ -13,7 +14,7 @@ export interface VisitorsModel {
   event_id?: number;
   event: Events;
   key_id?: number;
-  key: Key;
+  keyInfo: KeyModel;
   name: string;
   cpf: string;
   phone: string;
@@ -36,6 +37,7 @@ export interface CreateVisitorPayload {
 
 const visitorToVisitorModel = (response: Visitor): VisitorsModel => ({
   ...response,
+  keyInfo: keyToKeyModel(response.key),
   createdAt: toDateOrNull(response.created_at)!,
   updatedAt: toDateOrNull(response.updated_at)!,
 });
@@ -46,8 +48,8 @@ export function visitorModeltoTable(data: VisitorsModel) {
     Telefone: data.phone,
     Documento: data.cpf,
     Motivo: data.reason,
-    Bloco: data.key.bloco,
-    Piso: data.key.piso,
+    Bloco: data.keyInfo?.bloco,
+    Piso: data.keyInfo?.piso,
     Saída: data.updatedAt ? 'Concluído' : 'Pendente',
     'Entrou em': data.createdAt,
     'Saiu em': data.updatedAt || 'Não Saiu ainda',

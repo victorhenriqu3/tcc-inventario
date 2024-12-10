@@ -36,8 +36,7 @@ function Home() {
             <Box display="flex" flexDirection={{ base: 'column', md: 'row' }} gap={4} mt={6}>
               {Visitors ? (
                 <>
-
-                  <CardLastVisitor {...Visitors[0]} />
+                  <CardLastVisitor {...Visitors[0]} keyInfo={Visitors[0]?.keyInfo} key={Visitors[0]?.id} />
                 </>
               ) : (
                 <></>

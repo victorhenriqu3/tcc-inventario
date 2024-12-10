@@ -2,6 +2,7 @@ import { Card, CardBody, CardFooter, Text } from '@chakra-ui/react';
 import * as React from 'react';
 import { KeyLoanModel } from '../../services/keyLoans';
 import { KeyModel } from '../../services/Key';
+import { getPiso } from '../../types/Enums/EPiso';
 
 interface KeyLoanCard extends Omit<KeyLoanModel, 'key'> {
   keyInfo: KeyModel;
@@ -14,7 +15,9 @@ const CardLastLoan: React.FunctionComponent<KeyLoanCard> = (props) => {
           <Text fontWeight="600" fontSize={16} bg={'blue.600'} borderRadius={8} my={2} p={2}>
             Último Empréstimo
           </Text>
-          <Text fontWeight="600">{props.keyInfo?.name ?? 'Não houve registro ainda.'}</Text>
+          <Text fontWeight="600">
+            {props.keyInfo?.name} | Bloco {props.keyInfo?.bloco} | {getPiso(props.keyInfo?.piso)}
+          </Text>
           <Text color="whiteAlpha.800" fontSize={14}>
             {props.responsible_name}
           </Text>

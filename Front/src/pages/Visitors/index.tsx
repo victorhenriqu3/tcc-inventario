@@ -57,8 +57,8 @@ export default function Visitors() {
         return (item as any)[newItem]?.toString().toLowerCase().includes(searchItem.toLowerCase());
       });
 
-      const matchesPiso = selectedPiso ? item.key?.piso === selectedPiso : true;
-      const matchesBloco = selectedBloco ? item.key?.bloco === selectedBloco : true;
+      const matchesPiso = selectedPiso ? item.keyInfo?.piso === selectedPiso : true;
+      const matchesBloco = selectedBloco ? item.keyInfo?.bloco === selectedBloco : true;
 
       return matchesSearch && matchesPiso && matchesBloco;
     });
@@ -128,7 +128,7 @@ export default function Visitors() {
                 bg="#2f80ed"
                 color="white"
                 variant="primary"
-                onClick={() => generateXlsx(Visitors, 'Visitantes')}
+                onClick={() => generateXlsx(handleSearch(Visitors), 'Visitantes')}
                 leftIcon={<MdAdd />}
                 marginRight={3}
               >
@@ -230,8 +230,8 @@ export default function Visitors() {
                     {getNature(item.nature)} {item.event ? `| ${item.event.name} ` : ''}
                   </Text>
                   <Text fontSize="sm" fontWeight="400" color="gray.500" m={3} textAlign="justify">
-                    {item.responsiblePerson.name} ( {item.key.name} | Bloco {item.key.bloco} | {getPiso(item.key.piso)}{' '}
-                    )
+                    {item.responsiblePerson.name} ( {item.keyInfo.name} | Bloco {item.keyInfo.bloco} |{' '}
+                    {getPiso(item.keyInfo.piso)} )
                   </Text>
 
                   {/* <Text m={3} textAlign="justify">
